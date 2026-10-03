@@ -1,0 +1,10 @@
+# Herramientas locales de Claude Code (agentes y skills): no son parte del sitio
+.claude/
+
+# Configuración del correo con la clave: nunca va a un repositorio público
+propzen-mail.config.php
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store

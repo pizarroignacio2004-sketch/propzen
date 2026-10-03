@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Dormitorio principal de la casa en La Reina</title>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E7"/><stop offset="1" stop-color="#F0DFC4"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D86A43"/><stop offset="1" stop-color="#B44E2C"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86C4EC"/><stop offset="1" stop-color="#E6F4FB"/></linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A52"/><stop offset="1" stop-color="#A86C38"/></linearGradient>
+    <linearGradient id="linen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF3E2"/><stop offset="1" stop-color="#EBDDBF"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF8E6" stop-opacity=".55"/><stop offset="1" stop-color="#FFF8E6" stop-opacity="0"/></linearGradient>
+    <linearGradient id="beamWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A86C38"/><stop offset="1" stop-color="#7E4F27"/></linearGradient>
+    <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#4A1E0C" stop-opacity=".4"/><stop offset="1" stop-color="#4A1E0C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="lamp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".8"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".45" r=".78"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></radialGradient>
+  </defs>
+
+  <rect width="800" height="436" fill="url(#wall)"/>
+  <rect x="0" y="0" width="800" height="24" fill="url(#beamWood)"/>
+  <path d="M200 0V24M400 0V24M600 0V24" stroke="#6B4220" stroke-width="3"/>
+
+  <!-- Ventana en arco con postigos azules abiertos -->
+  <rect x="28" y="110" width="40" height="250" rx="3" fill="#1E6FD9"/>
+  <rect x="226" y="110" width="40" height="250" rx="3" fill="#1E6FD9"/>
+  <path d="M34 130H62M34 150H62M34 170H62M34 190H62M34 210H62M34 230H62M34 250H62M34 270H62M34 290H62M34 310H62M34 330H62M232 130H260M232 150H260M232 170H260M232 190H260M232 210H260M232 230H260M232 250H260M232 270H260M232 290H260M232 310H260M232 330H260" stroke="#185AB0" stroke-width="3"/>
+  <path d="M72 370V176A75 75 0 0 1 222 176V370Z" fill="#FFFFFF"/>
+  <path d="M84 362V180A63 63 0 0 1 210 180V362Z" fill="url(#sky)"/>
+  <path d="M84 290C110 270 140 288 160 274C182 262 196 280 210 274V362H84Z" fill="#7DB36B"/>
+  <circle cx="130" cy="250" r="30" fill="#4F9A4E"/><circle cx="122" cy="244" r="4" fill="#F7D43A"/><circle cx="140" cy="258" r="4" fill="#F7D43A"/>
+  <path d="M147 102V362" stroke="#FFFFFF" stroke-width="6"/>
+  <polygon points="84,436 210,436 470,600 120,600" fill="url(#beam)"/>
+
+  <!-- Piso de terracota y alfombra -->
+  <polygon points="0,436 800,436 800,600 0,600" fill="url(#floor)"/>
+  <path d="M0 462H800M0 498H800M0 544H800" stroke="#F4D3BE" stroke-opacity=".45" stroke-width="2"/>
+  <path d="M100 436L-140 600M220 436L40 600M340 436L250 600M460 436L460 600M580 436L670 600M700 436L880 600" stroke="#F4D3BE" stroke-opacity=".45" stroke-width="2"/>
+  <polygon points="84,436 210,436 470,600 120,600" fill="url(#beam)"/>
+  <polygon points="240,540 720,540 780,600 180,600" fill="#F4EAD3"/>
+
+  <!-- Cama de dos plazas con plaid azul -->
+  <ellipse cx="490" cy="560" rx="300" ry="20" fill="url(#shadow)"/>
+  <rect x="320" y="244" width="340" height="146" rx="14" fill="url(#head)"/>
+  <path d="M340 262H640M340 284H640" stroke="#D79C64" stroke-width="2"/>
+  <polygon points="304,376 676,376 740,488 240,488" fill="url(#linen)"/>
+  <path d="M330 410C430 402 560 410 664 404M290 448C430 440 580 452 712 444" stroke="#E2CFA8" stroke-width="3" fill="none"/>
+  <rect x="240" y="488" width="500" height="52" rx="6" fill="#E6D6B3"/>
+  <polygon points="262,452 718,452 740,488 240,488" fill="#1E6FD9"/>
+  <rect x="240" y="488" width="500" height="22" fill="#185AB0"/>
+  <path d="M276 468H704" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="6 10"/>
+  <rect x="348" y="320" width="130" height="60" rx="18" fill="#FBF3E2" stroke="#E2CFA8" stroke-width="2"/>
+  <rect x="500" y="320" width="130" height="60" rx="18" fill="#FBF3E2" stroke="#E2CFA8" stroke-width="2"/>
+  <rect x="452" y="340" width="76" height="46" rx="12" fill="#1E6FD9"/>
+  <path d="M462 348L518 380" stroke="#FFFFFF" stroke-width="3"/>
+
+  <!-- Velador de madera con lámpara de cerámica azul -->
+  <ellipse cx="724" cy="476" rx="60" ry="10" fill="url(#shadow)"/>
+  <rect x="684" y="384" width="84" height="88" rx="4" fill="#B87A42"/>
+  <rect x="684" y="376" width="84" height="12" rx="3" fill="#C98A52"/>
+  <path d="M694 428H758" stroke="#8E5A2E" stroke-width="2"/>
+  <ellipse cx="726" cy="300" rx="80" ry="60" fill="url(#lamp)"/>
+  <path d="M712 376C700 360 704 340 726 334C748 340 752 360 740 376Z" fill="#1E6FD9"/>
+  <path d="M702 298H750L760 334H692Z" fill="#FBF3E2"/>
+
+  <rect width="800" height="600" fill="url(#vignette)"/>
+</svg>

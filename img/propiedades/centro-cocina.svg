@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Cocina lineal del studio en Santiago Centro</title>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B4BBC2"/><stop offset="1" stop-color="#9AA2AA"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C3CBD3"/><stop offset="1" stop-color="#9DA6AF"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FC4DF"/><stop offset="1" stop-color="#E5EFF6"/></linearGradient>
+    <linearGradient id="lower" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2D31"/><stop offset="1" stop-color="#161719"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".45"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+    <pattern id="subway" width="60" height="30" patternUnits="userSpaceOnUse">
+      <rect width="60" height="30" fill="#F4F6F7"/>
+      <path d="M0 .5H60M0 15.5H60M.5 0V15M30.5 15V30" stroke="#D3D9DE" stroke-width="1.5"/>
+    </pattern>
+    <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#121417" stop-opacity=".45"/><stop offset="1" stop-color="#121417" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD3A1" stop-opacity=".8"/><stop offset="1" stop-color="#FFD3A1" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".45" r=".78"><stop offset=".58" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></radialGradient>
+  </defs>
+
+  <rect width="800" height="470" fill="url(#wall)"/>
+
+  <!-- Ventana con marco negro -->
+  <rect x="40" y="60" width="200" height="200" fill="#1C1C1C"/>
+  <rect x="50" y="70" width="180" height="180" fill="url(#sky)"/>
+  <path d="M50 190H80V150H104V190H130V120L146 104L162 120V190H200V160H230V250H50Z" fill="#8C9AA8"/>
+  <path d="M140 70V250M50 160H230" stroke="#1C1C1C" stroke-width="7"/>
+
+  <!-- Azulejo metro blanco y repisas de metal -->
+  <rect x="270" y="40" width="530" height="300" fill="url(#subway)"/>
+  <rect x="0" y="270" width="270" height="70" fill="url(#subway)"/>
+  <path d="M300 130H560M300 210H560" stroke="#121212" stroke-width="7"/>
+  <path d="M310 130V140M550 130V140M310 210V220M550 210V220" stroke="#121212" stroke-width="4"/>
+  <rect x="320" y="92" width="26" height="38" rx="4" fill="#E8EBEE" stroke="#B9C2CC"/><rect x="354" y="100" width="22" height="30" rx="4" fill="#F06A3B"/>
+  <circle cx="420" cy="108" r="22" fill="#FFFFFF" stroke="#2B2F34" stroke-width="3"/><circle cx="466" cy="108" r="22" fill="#FFFFFF" stroke="#2B2F34" stroke-width="3"/>
+  <path d="M516 130C506 112 510 96 522 88C528 104 526 118 516 130ZM530 130C538 112 552 106 564 104C562 120 548 128 530 130Z" fill="#5DAA57"/>
+  <rect x="320" y="176" width="70" height="34" rx="3" fill="#2B2F34"/><rect x="404" y="182" width="34" height="28" rx="6" fill="#B9C2CC"/><rect x="450" y="170" width="16" height="40" rx="3" fill="#F06A3B"/><rect x="472" y="176" width="16" height="34" rx="3" fill="#E8EBEE"/>
+
+  <!-- Mesón de hormigón y muebles negros -->
+  <polygon points="0,334 800,334 800,352 0,352" fill="#A9B1B9"/>
+  <rect x="0" y="352" width="800" height="6" fill="#7F878F"/>
+  <rect x="0" y="358" width="800" height="112" fill="url(#lower)"/>
+  <path d="M120 358V470M240 358V470M360 358V470M480 358V470M600 358V470M720 358V470" stroke="#3A3E43" stroke-width="2"/>
+  <path d="M70 372H170M190 372H290M310 372H410M430 372H530M550 372H650M670 372H770" stroke="#8C959E" stroke-width="3" stroke-linecap="round"/>
+  <rect x="330" y="328" width="130" height="7" rx="2" fill="#121212"/>
+  <ellipse cx="364" cy="331" rx="15" ry="2" fill="#3A3E42"/><ellipse cx="428" cy="331" rx="15" ry="2" fill="#3A3E42"/>
+  <rect x="560" y="322" width="90" height="12" rx="3" fill="#8C959E"/>
+  <path d="M604 334V292C604 280 620 280 620 292V298" stroke="#121212" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M110 334H150L146 304H114Z" fill="#E8EBEE"/><path d="M130 304C118 286 122 270 132 262C138 280 138 292 130 304Z" fill="#5DAA57"/>
+  <rect x="680" y="300" width="40" height="34" rx="6" fill="#F06A3B"/><path d="M688 300C688 290 712 290 712 300" stroke="#121212" stroke-width="4" fill="none"/>
+  <polygon points="50,250 230,250 420,470 60,470" fill="url(#beam)" opacity=".7"/>
+
+  <!-- Piso de hormigón pulido -->
+  <polygon points="0,470 800,470 800,600 0,600" fill="url(#floor)"/>
+  <path d="M0 530H800" stroke="#8C959E" stroke-width="2" opacity=".5"/>
+  <ellipse cx="400" cy="474" rx="420" ry="10" fill="url(#shadow)"/>
+
+  <!-- Lámpara colgante naranja -->
+  <path d="M440 0V200" stroke="#121212" stroke-width="2"/>
+  <ellipse cx="440" cy="250" rx="90" ry="44" fill="url(#glow)"/>
+  <path d="M414 200H466L480 232H400Z" fill="#F06A3B"/>
+  <path d="M400 232H480" stroke="#C4501F" stroke-width="3"/>
+
+  <!-- Dos pisos altos de metal -->
+  <g>
+    <ellipse cx="560" cy="596" rx="56" ry="8" fill="url(#shadow)"/>
+    <path d="M540 500L528 600M580 500L592 600M548 500L552 600" stroke="#121212" stroke-width="5" stroke-linecap="round"/>
+    <path d="M532 556H588" stroke="#121212" stroke-width="4"/>
+    <ellipse cx="560" cy="498" rx="36" ry="9" fill="#2B2F34"/><ellipse cx="560" cy="494" rx="36" ry="8" fill="#3A3E43"/>
+  </g>
+  <g>
+    <ellipse cx="680" cy="596" rx="56" ry="8" fill="url(#shadow)"/>
+    <path d="M660 500L648 600M700 500L712 600M668 500L672 600" stroke="#121212" stroke-width="5" stroke-linecap="round"/>
+    <path d="M652 556H708" stroke="#121212" stroke-width="4"/>
+    <ellipse cx="680" cy="498" rx="36" ry="9" fill="#2B2F34"/><ellipse cx="680" cy="494" rx="36" ry="8" fill="#3A3E43"/>
+  </g>
+
+  <rect width="800" height="600" fill="url(#vignette)"/>
+</svg>

@@ -1,0 +1,22 @@
+# Propzen en Hostinger (LiteSpeed / Apache)
+
+# Sin listados de carpetas
+Options -Indexes
+
+# La configuración del correo (con la clave) y su ejemplo no se pueden abrir desde el navegador
+<FilesMatch "^propzen-mail\.config(\.example)?\.php$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(_headers|\.htaccess)$">
+  Require all denied
+</FilesMatch>
+
+# Las mismas cabeceras de seguridad de _headers (ese archivo solo lo leen Netlify y Cloudflare Pages)
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>

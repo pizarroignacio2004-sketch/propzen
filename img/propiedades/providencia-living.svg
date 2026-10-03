@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Living nórdico del depa en Providencia</title>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F8FA"/><stop offset="1" stop-color="#E1E7ED"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4C795"/><stop offset="1" stop-color="#CBA169"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8DFF3"/><stop offset="1" stop-color="#F1FAFE"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".6"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+    <linearGradient id="wallLight" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".55"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+    <linearGradient id="sofaBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D6C88"/><stop offset="1" stop-color="#1D4E63"/></linearGradient>
+    <linearGradient id="sofaFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D4E63"/><stop offset="1" stop-color="#143A4A"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EED8AE"/><stop offset="1" stop-color="#D9B57E"/></linearGradient>
+    <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3B2A17" stop-opacity=".38"/><stop offset="1" stop-color="#3B2A17" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".45" r=".78"><stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></radialGradient>
+  </defs>
+
+  <!-- Muro y piso de roble claro -->
+  <rect width="800" height="420" fill="url(#wall)"/>
+  <rect x="0" y="0" width="420" height="420" fill="url(#wallLight)"/>
+  <polygon points="0,420 800,420 800,600 0,600" fill="url(#floor)"/>
+  <path d="M80 420L-280 600M160 420L-110 600M240 420L60 600M320 420L230 600M400 420L400 600M480 420L570 600M560 420L740 600M640 420L910 600M720 420L1080 600" stroke="#B88D57" stroke-opacity=".45" stroke-width="2"/>
+  <path d="M0 455H800M0 500H800M0 556H800" stroke="#B88D57" stroke-opacity=".18" stroke-width="2"/>
+  <rect x="0" y="408" width="800" height="12" fill="#FFFFFF"/>
+  <rect x="0" y="418" width="800" height="3" fill="#C9B08A" opacity=".5"/>
+
+  <!-- Ventanal con árboles y edificios -->
+  <rect x="56" y="54" width="256" height="330" rx="2" fill="#FFFFFF"/>
+  <rect x="68" y="66" width="232" height="306" fill="url(#sky)"/>
+  <rect x="210" y="170" width="60" height="140" fill="#DCE6EE"/>
+  <rect x="150" y="210" width="44" height="110" fill="#E6EDF2"/>
+  <path d="M68 300C96 262 126 286 150 256C172 232 200 262 230 244C258 228 280 252 300 238V372H68Z" fill="#9DCAA6"/>
+  <path d="M68 334C108 304 150 322 190 302C232 286 262 310 300 296V372H68Z" fill="#76AF86"/>
+  <path d="M184 66V372M68 220H300" stroke="#FFFFFF" stroke-width="8"/>
+  <rect x="48" y="382" width="272" height="8" rx="2" fill="#FFFFFF"/>
+  <path d="M316 54C330 120 306 190 322 260C334 320 316 360 326 400H352C340 340 360 280 344 210C330 140 352 100 340 54Z" fill="#FFFFFF" opacity=".75"/>
+
+  <!-- Luz del ventanal sobre el piso -->
+  <polygon points="68,420 300,420 600,600 120,600" fill="url(#beam)"/>
+
+  <!-- Cuadro sobre el sofá -->
+  <rect x="452" y="118" width="164" height="118" fill="#FFFFFF" stroke="#D3DBE2" stroke-width="2"/>
+  <rect x="464" y="130" width="140" height="94" fill="#F2EEE6"/>
+  <circle cx="512" cy="172" r="26" fill="#00A8C8" opacity=".85"/>
+  <rect x="534" y="150" width="54" height="60" fill="#E2C795"/>
+  <path d="M474 210C510 196 548 206 594 192" stroke="#1D4E63" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Lámpara de arco -->
+  <path d="M744 420V180C744 120 700 92 640 104" stroke="#2B2B2B" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="744" cy="420" rx="24" ry="6" fill="#2B2B2B"/>
+  <path d="M612 98H668L656 124H624Z" fill="#F7F4EE"/>
+  <ellipse cx="640" cy="134" rx="70" ry="40" fill="#FFF6DA" opacity=".35"/>
+
+  <!-- Alfombra -->
+  <polygon points="300,470 730,470 790,575 236,575" fill="#F2F0EB"/>
+  <polygon points="320,480 712,480 762,566 262,566" fill="none" stroke="#D6DDE3" stroke-width="3"/>
+
+  <!-- Sofá azul petróleo con cojines -->
+  <ellipse cx="560" cy="452" rx="220" ry="16" fill="url(#shadow)"/>
+  <rect x="396" y="300" width="330" height="98" rx="18" fill="url(#sofaBack)"/>
+  <rect x="384" y="364" width="356" height="52" rx="14" fill="#25627C"/>
+  <rect x="384" y="404" width="356" height="40" rx="10" fill="url(#sofaFront)"/>
+  <path d="M502 368V408M622 368V408" stroke="#1A4558" stroke-width="3"/>
+  <rect x="364" y="332" width="44" height="112" rx="16" fill="#215A72"/>
+  <rect x="716" y="332" width="44" height="112" rx="16" fill="#215A72"/>
+  <rect x="430" y="318" width="74" height="58" rx="14" fill="#00A8C8" transform="rotate(-8 467 347)"/>
+  <rect x="624" y="318" width="74" height="58" rx="14" fill="#F4F1EA" transform="rotate(7 661 347)"/>
+  <path d="M640 330L686 368" stroke="#D9D2C4" stroke-width="3"/>
+  <path d="M400 444V456M724 444V456" stroke="#B88D57" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Mesa de centro redonda -->
+  <ellipse cx="476" cy="530" rx="96" ry="16" fill="url(#shadow)"/>
+  <path d="M410 498L398 532M542 498L554 532M450 506L446 536M502 506L506 536" stroke="#B88D57" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="476" cy="496" rx="88" ry="22" fill="url(#wood)"/>
+  <ellipse cx="476" cy="492" rx="88" ry="20" fill="#F0DDB9"/>
+  <rect x="444" y="474" width="48" height="10" rx="2" fill="#1D4E63"/>
+  <rect x="448" y="466" width="40" height="9" rx="2" fill="#E9EEF2"/>
+  <path d="M520 486C516 470 532 462 528 448C540 458 536 474 532 486Z" fill="#7FB58C"/>
+  <rect x="516" y="482" width="20" height="12" rx="3" fill="#FFFFFF"/>
+
+  <!-- Planta en macetero -->
+  <ellipse cx="290" cy="426" rx="40" ry="8" fill="url(#shadow)"/>
+  <path d="M262 360H318L310 424H270Z" fill="#EEF1F3"/>
+  <path d="M262 360H318L316 372H264Z" fill="#DCE2E7"/>
+  <path d="M290 362C260 330 238 300 250 262C270 290 284 320 290 362Z" fill="#4E9A62"/>
+  <path d="M290 362C300 316 326 296 340 270C344 306 322 336 290 362Z" fill="#62AE73"/>
+  <path d="M290 362C282 320 286 280 300 246C312 290 304 326 290 362Z" fill="#3F8854"/>
+
+  <rect width="800" height="600" fill="url(#vignette)"/>
+</svg>

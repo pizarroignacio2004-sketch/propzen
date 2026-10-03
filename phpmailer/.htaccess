@@ -1,0 +1,3 @@
+# PHPMailer 7.1.1 (https://github.com/PHPMailer/PHPMailer, licencia LGPL 2.1, ver LICENSE).
+# Solo lo usa enviar.php desde el servidor: nadie necesita abrir estos archivos desde el navegador.
+Require all denied

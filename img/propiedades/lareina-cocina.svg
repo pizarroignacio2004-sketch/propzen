@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Cocina con isla de madera de la casa en La Reina</title>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF7EA"/><stop offset="1" stop-color="#F0E0C6"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D86A43"/><stop offset="1" stop-color="#B44E2C"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86C4EC"/><stop offset="1" stop-color="#E6F4FB"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A52"/><stop offset="1" stop-color="#A86C38"/></linearGradient>
+    <linearGradient id="island" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B87A42"/><stop offset="1" stop-color="#8E5A2E"/></linearGradient>
+    <linearGradient id="beam" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8E6" stop-opacity=".5"/><stop offset="1" stop-color="#FFF8E6" stop-opacity="0"/></linearGradient>
+    <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse">
+      <rect width="34" height="34" fill="#F8F4EA"/>
+      <rect x=".5" y=".5" width="33" height="33" fill="none" stroke="#D9CDB6"/>
+      <path d="M17 6L28 17L17 28L6 17Z" fill="none" stroke="#1E6FD9" stroke-width="2"/>
+      <circle cx="17" cy="17" r="3" fill="#1E6FD9"/>
+      <path d="M0 0L5 5M34 0L29 5M0 34L5 29M34 34L29 29" stroke="#1E6FD9" stroke-width="2"/>
+    </pattern>
+    <radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#4A1E0C" stop-opacity=".4"/><stop offset="1" stop-color="#4A1E0C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vignette" cx=".5" cy=".45" r=".78"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".24"/></radialGradient>
+  </defs>
+
+  <rect width="800" height="460" fill="url(#wall)"/>
+  <!-- Repisas de madera con frascos y platos -->
+  <rect x="40" y="96" width="400" height="12" rx="2" fill="url(#wood)"/>
+  <rect x="40" y="176" width="400" height="12" rx="2" fill="url(#wood)"/>
+  <rect x="62" y="56" width="26" height="40" rx="5" fill="#F4EAD3" stroke="#D9CDB6"/><rect x="96" y="66" width="22" height="30" rx="5" fill="#EAD7A4"/>
+  <circle cx="160" cy="72" r="24" fill="#FFFFFF" stroke="#1E6FD9" stroke-width="4"/><circle cx="210" cy="72" r="24" fill="#FFFFFF" stroke="#1E6FD9" stroke-width="4"/>
+  <rect x="260" y="60" width="34" height="36" rx="6" fill="#1E6FD9"/><rect x="304" y="70" width="30" height="26" rx="6" fill="#F4EAD3" stroke="#D9CDB6"/>
+  <path d="M380 96C370 80 374 64 386 56C392 70 392 84 380 96ZM396 96C404 78 418 72 430 70C428 84 414 92 396 96Z" fill="#5DAA57"/>
+  <rect x="70" y="140" width="80" height="36" rx="4" fill="#C98A52"/><rect x="170" y="148" width="40" height="28" rx="6" fill="#F4EAD3" stroke="#D9CDB6"/>
+  <path d="M240 176V150H300V176" fill="#EAD7A4"/><path d="M330 176C330 150 380 150 380 176Z" fill="#B44E2C"/>
+
+  <!-- Ventana en arco hacia el jardín -->
+  <path d="M556 300V136A86 86 0 0 1 728 136V300Z" fill="#FFFFFF"/>
+  <path d="M568 292V140A74 74 0 0 1 716 140V292Z" fill="url(#sky)"/>
+  <path d="M568 240C600 222 630 238 660 226C690 214 704 232 716 226V292H568Z" fill="#7DB36B"/>
+  <circle cx="610" cy="214" r="26" fill="#4F9A4E"/><circle cx="604" cy="206" r="4" fill="#F7D43A"/><circle cx="620" cy="220" r="4" fill="#F7D43A"/>
+  <path d="M642 62V292" stroke="#FFFFFF" stroke-width="6"/>
+
+  <!-- Azulejos y mesón de piedra crema -->
+  <rect x="0" y="236" width="520" height="118" fill="url(#tiles)"/>
+  <rect x="520" y="300" width="280" height="54" fill="url(#tiles)"/>
+  <polygon points="0,348 800,348 800,366 0,366" fill="#EFE0BC"/>
+  <rect x="0" y="366" width="800" height="6" fill="#CDB98C"/>
+  <rect x="0" y="372" width="800" height="88" fill="url(#wood)"/>
+  <path d="M100 372V460M200 372V460M300 372V460M400 372V460M500 372V460M600 372V460M700 372V460" stroke="#8E5A2E" stroke-width="2"/>
+  <path d="M86 410V422M186 410V422M286 410V422M386 410V422M486 410V422M586 410V422M686 410V422" stroke="#EAD7A4" stroke-width="4" stroke-linecap="round"/>
+  <path d="M190 348V310C190 296 210 296 210 310" stroke="#8A8F93" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <rect x="150" y="340" width="90" height="8" rx="2" fill="#D9C79C"/>
+  <path d="M320 348H382L378 322H324Z" fill="#B44E2C"/><path d="M340 322C330 304 334 290 346 282C350 298 348 312 340 322ZM356 322C364 306 376 300 388 296C386 312 372 320 356 322Z" fill="#5DAA57"/>
+  <polygon points="568,300 716,300 820,460 520,460" fill="url(#beam)"/>
+
+  <!-- Piso de terracota -->
+  <polygon points="0,460 800,460 800,600 0,600" fill="url(#floor)"/>
+  <path d="M0 486H800M0 520H800M0 562H800" stroke="#F4D3BE" stroke-opacity=".45" stroke-width="2"/>
+  <path d="M80 460L-120 600M200 460L60 600M320 460L250 600M440 460L440 600M560 460L630 600M680 460L820 600" stroke="#F4D3BE" stroke-opacity=".45" stroke-width="2"/>
+
+  <!-- Isla de madera con cubierta crema -->
+  <ellipse cx="420" cy="596" rx="330" ry="16" fill="url(#shadow)"/>
+  <polygon points="150,486 690,486 740,516 100,516" fill="#F3E6C4"/>
+  <rect x="100" y="516" width="640" height="10" fill="#D9C79C"/>
+  <rect x="100" y="526" width="640" height="74" fill="url(#island)"/>
+  <path d="M260 526V600M420 526V600M580 526V600" stroke="#7A4D27" stroke-width="2"/>
+  <ellipse cx="300" cy="482" rx="56" ry="12" fill="#FFFFFF" stroke="#1E6FD9" stroke-width="3"/>
+  <circle cx="284" cy="474" r="9" fill="#F7D43A"/><circle cx="304" cy="470" r="9" fill="#F7D43A"/><circle cx="318" cy="478" r="8" fill="#7DBB55"/>
+  <rect x="520" y="462" width="80" height="22" rx="4" fill="#C98A52"/><path d="M528 470H592" stroke="#EAD7A4" stroke-width="2"/>
+
+  <!-- Lámparas de mimbre -->
+  <path d="M260 0V120M560 0V120" stroke="#5E3A1C" stroke-width="2"/>
+  <ellipse cx="260" cy="170" rx="70" ry="34" fill="url(#glow)"/><ellipse cx="560" cy="170" rx="70" ry="34" fill="url(#glow)"/>
+  <path d="M230 120H290L300 150H220Z" fill="#E2C48F"/><path d="M530 120H590L600 150H520Z" fill="#E2C48F"/>
+  <path d="M236 128H284M232 138H288M536 128H584M532 138H588" stroke="#B8925E" stroke-width="2"/>
+
+  <rect width="800" height="600" fill="url(#vignette)"/>
+</svg>
