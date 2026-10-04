@@ -611,9 +611,14 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
   --tex-lava: url("textures/lava.jpg");
 }
 
-/* Secciones claras sobre travertino; oscuras sobre piedra de lava velada con Silhouette */
+/* Secciones claras: un velo crema muy leve sobre el hormigón armado de la página (se ve el muro en toda la página);
+   oscuras sobre piedra de lava velada con Silhouette */
 .hero { background-image: linear-gradient(rgba(238, 230, 216, .9), rgba(238, 230, 216, .9)), var(--tex-trav); background-size: auto, 720px; }
-.section--paper { background-image: linear-gradient(rgba(247, 242, 233, .88), rgba(247, 242, 233, .88)), var(--tex-trav); background-size: auto, 640px; }
+.section--paper {
+  background: rgba(240, 236, 228, .30);
+  background-image: none;
+  border-block-color: rgba(0, 0, 0, .06);
+}
 .section--ink {
   background-color: var(--umbra);
   background-image: linear-gradient(rgba(85, 73, 63, .84), rgba(85, 73, 63, .84)), var(--tex-lava);
@@ -678,22 +683,79 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .flip__face--after .flip__stamp, .flip__face--after .flip__icon { color: var(--gold-light); }
 
 /* ===== Intro de obra: ladrillos → vaciado de hormigón → logo → página =====
-   La secuencia se dibuja en un canvas (script.js, objeto INTRO). El hormigón seco es el mismo
-   que queda como fondo fijo de la página, así que el paso de la intro al sitio no tiene corte. */
+   La secuencia se dibuja en un canvas (script.js, objeto INTRO). El hormigón vaciado es el mismo hormigón armado
+   del fondo de la página, al mismo tamaño (--concreto-size, que script.js lee de aquí) y desde el mismo origen:
+   al terminar la intro, el canvas coincide al píxel con el fondo y no hay corte. */
 :root {
-  --hormigon: #D8D5CF;
+  --hormigon: #CDCAC4;        /* tono medio de hormigon-armado.jpg */
+  --concreto-size: 720px;     /* lado de la baldosa de hormigón: 4 paneles de 360 px */
   --intro-cascade: .7s;   /* duración de la entrada de cada bloque al terminar la intro */
   --intro-step: .11s;     /* retraso entre un bloque y el siguiente */
 }
 
-/* Hormigón liso como fondo fijo de toda la página (capa fija: funciona también en celulares) */
+/* Hormigón armado a la vista como fondo fijo de toda la página (capa fija: funciona también en celulares).
+   La textura trae cuatro paneles de moldaje por baldosa, con la junta repartida entre los bordes: al repetirse
+   no hay cortes y todos los paneles miden lo mismo (360 px en escritorio, 240 px en celular). */
 body { background: var(--hormigon); }
 body::before {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: var(--hormigon) url("textures/hormigon.jpg") 0 0 / 512px 512px repeat;
+  background: var(--hormigon) url("textures/hormigon-armado.jpg") 0 0 / var(--concreto-size) var(--concreto-size) repeat;
+}
+/* Celular: paneles de 240 px para que no se vean gigantes (la intro usa el mismo valor) */
+@media (max-width: 767px) {
+  :root { --concreto-size: 480px; }
 }
 .hero { background-image: none; }
-.nav { background: rgba(216, 213, 207, .94); }
+.nav { background: rgba(205, 202, 196, .92); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+
+/* Halo claro y difuso detrás de bajadas, frases con ✓ y rótulos que quedan directo sobre el hormigón:
+   las juntas, los huecos de amarre y las manchas pasan por detrás sin bajar el contraste. Mismo color de siempre. */
+/* Tercera capa de 1 px: casi invisible, aclara justo el borde de cada letra (sobre un hueco de amarre en celular
+   la bajada quedaba en 4,3:1 con solo las dos primeras) */
+:root {
+  --halo-hormigon: 0 0 6px rgba(240, 236, 228, .85), 0 0 2px rgba(240, 236, 228, .9), 0 0 1px rgba(240, 236, 228, .9);
+  --velo-hormigon: rgba(240, 236, 228, .45);
+}
+/* En celular la baldosa es más chica y hay un hueco de amarre cada 80 px: un hueco pegado al borde de una letra
+   dejaba la bajada en 4,3:1 con el velo al 45 %. Al 50 % pasa de 4,5:1 */
+@media (max-width: 767px) {
+  :root { --velo-hormigon: rgba(240, 236, 228, .5); }
+}
+.hero__eyebrow, .lead, .hero__trust,
+.disc__lead, .disc__count,
+.car__lead, .car__foot,
+.section__intro p,
+.imp__lead, .imp__day,
+.pr__note, .addons__eyebrow, .addons__lead,
+.web__eyebrow,
+.split__head p, .faq details p { text-shadow: var(--halo-hormigon); }
+
+/* Con solo el halo, un hueco de amarre, un cruce de juntas o la mancha más oscura detrás de una bajada o un rótulo
+   lo dejan bajo 4,5:1. Detrás de cada uno va un velo crema al 45 % con bordes difuminados (no se lee como caja).
+   Sobresale 18 px arriba y abajo y 16 px a los lados (la primera y la última línea y los extremos de cada línea
+   quedan con el velo completo); 16 px es el margen mínimo de la página, así que no crea scroll horizontal. */
+.hero__eyebrow, .lead, .hero__trust, .disc__lead, .disc__count, .car__lead, .car__foot, .section__intro p,
+.imp__lead, .pr__note, .addons__eyebrow, .addons__lead, .web__eyebrow, .faq details p { position: relative; isolation: isolate; }
+.hero__eyebrow::before, .lead::before, .hero__trust::before, .disc__lead::before, .disc__count::before, .car__lead::before,
+.car__foot::before, .section__intro p::before, .imp__lead::before, .pr__note::before, .addons__eyebrow::before,
+.addons__lead::before, .web__eyebrow::before, .faq details p::before {
+  content: ""; position: absolute; inset: -18px -16px; z-index: -1; pointer-events: none;
+  border-radius: 28px; background: var(--velo-hormigon); filter: blur(8px);
+}
+/* "Complementos" lleva una línea fina hasta el borde: el velo cubre el texto y se desvanece a lo largo de la línea */
+.addons__eyebrow::before {
+  right: auto; width: 16em; border-radius: 28px 0 0 28px;
+  background: linear-gradient(90deg, var(--velo-hormigon) 0, var(--velo-hormigon) 11em, rgba(240, 236, 228, 0) 16em);
+}
+/* Rótulos verdes sobre el hormigón: el verde --plano no llega a 4,5:1 sobre un hueco de amarre ni con el velo;
+   pasan al verde pizarra de las bajadas (--texto-2), casi igual de tono */
+.hero .hero__eyebrow, .addons .addons__eyebrow { color: var(--texto-2); }
+/* Bloques que ocupaban todo el ancho con poco texto: se ajustan al texto para que el velo no sea una franja */
+.hero__eyebrow { width: fit-content; }
+.hero__trust { justify-self: start; }
+.addons__lead { justify-self: start; }
+.car .car__foot { width: fit-content; margin-inline: auto; }
+.web .web__eyebrow { width: fit-content; margin-inline: auto; }
 
 /* Capa de la intro */
 .intro { display: none; position: fixed; inset: 0; z-index: 200; overflow: hidden; background: #241E1A; transition: opacity .3s ease; }
@@ -1059,7 +1121,7 @@ html.intro-on { overflow: hidden; }
 }
 
 /* ===== Cómo funciona: carrusel de cinco pasos con iluminación =====
-   Mismo fondo que #funciones: la clase compartida .section--paper (papel con travertino), puesta en el HTML.
+   Mismo fondo que #funciones: la clase compartida .section--paper (velo crema leve sobre el hormigón armado), puesta en el HTML.
    Cada paso tiene su color (--c) para halo, borde, punto y botón; sobre el papel, el número y la etiqueta de día
    usan versiones oscurecidas (--c-num, --c-text). Contraste (scratchpad/c-imp-claro.js): títulos 13:1, frases 6:1,
    días 5,1–5,7:1, números 3,4–5,7:1 (texto grande), botones 5,3–9,6:1. */

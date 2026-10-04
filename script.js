@@ -1265,18 +1265,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const easeOutBack = (p) => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
 
   // ---------- Hormigón ----------
+  // Lado de la baldosa de hormigón armado, leído de --concreto-size (styles.css): 720 px, 480 px en celulares
+  const concreteSize = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--concreto-size')) || 720;
   const concrete = new Image();
-  let concretePat = null, wetPat = null;
+  let concretePat = null, wetPat = null, size = concreteSize();
   concrete.onload = () => {
-    // Mismo tamaño y origen que el fondo de la página (512 px desde la esquina): el paso final no tiene corte
-    const m = new DOMMatrix().scale(512 / concrete.naturalWidth);
+    // Mismo hormigón, mismo tamaño (--concreto-size) y mismo origen (esquina superior izquierda de la ventana)
+    // que body::before: el paso final no tiene corte. El patrón se dibuja en píxeles CSS (ctx ya está escalado por dpr)
+    size = concreteSize();
+    const m = new DOMMatrix().scale(size / concrete.naturalWidth);
     concretePat = ctx.createPattern(concrete, 'repeat'); concretePat.setTransform(m);
     // Hormigón húmedo: la misma textura oscurecida una sola vez
     const wc = makeCanvas(concrete.naturalWidth, concrete.naturalHeight), wx = wc.getContext('2d');
     wx.drawImage(concrete, 0, 0); wx.fillStyle = 'rgba(48,45,41,.38)'; wx.fillRect(0, 0, wc.width, wc.height);
     wetPat = ctx.createPattern(wc, 'repeat'); wetPat.setTransform(m);
   };
-  concrete.src = 'textures/hormigon.jpg';
+  concrete.src = 'textures/hormigon-armado.jpg';
   // Lenguas de hormigón que se adelantan en el borde
   const lobes = Array.from({ length: Math.max(4, Math.round(W / 220)) }, () => ({ x: rand() * W, w: 50 + rand() * 110, a: 18 + rand() * 42, ph: rand() * 6.28 }));
   const easeInOut = (p) => (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
@@ -1415,7 +1419,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const onKey = (e) => { if (e.key === 'Escape') finish(); };
   // Solo un cambio real de tamaño (girar el teléfono) interrumpe la intro; la barra del navegador no
-  const onResize = () => { if (Math.abs(window.innerWidth - W) > 40 || Math.abs(window.innerHeight - H) > 160) finish(); };
+  // Si la ventana cambia mucho, o cruza el corte de 767 px y cambia --concreto-size, la intro termina: el canvas no se
+  // vuelve a dibujar y así el hormigón del fondo nunca queda a otro tamaño que el del vaciado
+  const onResize = () => { if (Math.abs(window.innerWidth - W) > 40 || Math.abs(window.innerHeight - H) > 160 || concreteSize() !== size) finish(); };
   document.getElementById('introSkip').addEventListener('click', finish);
   document.addEventListener('keydown', onKey);
   window.addEventListener('resize', onResize);
