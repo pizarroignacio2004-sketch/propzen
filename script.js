@@ -634,26 +634,31 @@ document.addEventListener('DOMContentLoaded', () => {
     field.addEventListener('blur', () => { if (field.dataset.dirty) validate(field); });
   });
 
-  // Envío real: enviar.php (en el mismo servidor de Hostinger) lo reenvía a contacto@propzen.cl por SMTP.
-  // Devuelve { ok } o { ok: false, message } con un texto para mostrar; nunca lanza error.
+  // Apps Script de contacto@propzen.cl: reenvía cada solicitud por correo y la guarda en la planilla "Leads Propzen"
+  const URL_FORMULARIO = 'https://script.google.com/macros/s/AKfycbw9YyKaPUWJXj20bRNB9Hrhm4mzVCssSzKW6KGjWv7G-Le9k9xgzCrXYcfWGBGSFB9U/exec';
   const SEND_ERRORS = {
     datos: 'Revisa los datos del formulario e inténtalo de nuevo.',
     limite: 'Recibimos varias solicitudes seguidas desde tu conexión. Espera unos minutos e inténtalo de nuevo.',
     otro: 'No pudimos enviar tu solicitud. Inténtalo de nuevo en un momento o escríbenos a contacto@propzen.cl.',
   };
+  // Envía la solicitud al Apps Script. Responde siempre con estado 200 y { ok: true } o { ok: false, error: 'datos' | 'limite' | 'otro' }.
+  // El cuerpo va como texto plano: así el navegador no hace la verificación previa de CORS, que Apps Script no admite;
+  // Google responde con una redirección a script.googleusercontent.com, que fetch sigue.
+  // Devuelve { ok } o { ok: false, message } con un texto para mostrar; nunca lanza error (20 s como máximo).
   const sendLead = async (data) => {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
-      const res = await fetch('enviar.php', {
+      const res = await fetch(URL_FORMULARIO, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(data),
+        redirect: 'follow',
         signal: ctrl.signal,
       });
       const body = await res.json().catch(() => ({}));
-      if (res.ok && body.ok) return { ok: true };
-      return { ok: false, message: SEND_ERRORS[res.status === 429 ? 'limite' : res.status === 422 ? 'datos' : 'otro'] };
+      if (res.ok && body.ok === true) return { ok: true };
+      return { ok: false, message: SEND_ERRORS[body.error === 'datos' || body.error === 'limite' ? body.error : 'otro'] };
     } catch (err) {
       return { ok: false, message: SEND_ERRORS.otro };
     } finally {
@@ -675,9 +680,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Campo trampa: si un bot lo completó, se descarta en silencio
     if (leadForm.elements.web.value) return;
 
+    // Va también el campo trampa (vacío): el Apps Script lo revisa por su cuenta
     const data = Object.fromEntries(new FormData(leadForm));
-    delete data.web;
-    data.telefono = normTel(data.telefono);
+    data.telefono = normTel(data.telefono);   // siempre "+569XXXXXXXX", el formato que exige el Apps Script
+    data.acepto = leadForm.elements.acepto.checked;   // la casilla trae el valor "sí": llega como true
 
     btn.disabled = true;
     btn.classList.add('is-sending');

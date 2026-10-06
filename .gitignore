@@ -4,6 +4,10 @@
 # Configuración del correo con la clave: nunca va a un repositorio público
 propzen-mail.config.php
 
+# Envío por PHP (para un hosting con PHP): GitHub Pages no lo ejecuta y el formulario ahora usa el Apps Script.
+# Se queda en la carpeta, pero no se publica en propzen.cl
+enviar.php
+
 # Sistema
 Thumbs.db
 desktop.ini
