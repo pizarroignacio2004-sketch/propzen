@@ -308,6 +308,10 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .footer nav a { text-decoration: none; }
 .footer nav a:hover { color: var(--pizarra); text-decoration: underline; }
 .footer p { margin: 0; }
+/* Línea legal: fila propia bajo el logo y el menú del pie, en todas las páginas */
+.footer__legal { flex-basis: 100%; padding-top: 18px; border-top: 1px solid var(--linea); font-size: .85rem; line-height: 1.6; }
+.footer__legal a { color: inherit; text-decoration: underline; text-decoration-color: rgba(46, 61, 66, .4); text-underline-offset: 2px; }
+.footer__legal a:hover { color: var(--pizarra); text-decoration-color: currentColor; }
 
 /* Aparición al entrar en pantalla (solo con JS activo) */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
