@@ -1764,12 +1764,17 @@
                 </div>
               </fieldset>
 
+              <!-- Consentimiento para el contacto (obligatorio, nunca premarcado). Los enlaces abren la política en otra
+                   pestaña para no perder lo escrito en el formulario -->
               <div class="ct-consent">
                 <input type="checkbox" id="f-acepto" name="acepto" value="sí" required aria-describedby="e-acepto">
-                <label for="f-acepto"><span class="ct-consent__box" aria-hidden="true"></span><span>He leído y acepto la
-                  <!-- TODO: crear privacidad.html -->
-                  <a href="privacidad.html">Política de Privacidad</a> y autorizo a Propzen a contactarme con los datos entregados.</span></label>
+                <label for="f-acepto"><span class="ct-consent__box" aria-hidden="true"></span><span>He leído la <a href="/privacidad.html" target="_blank" rel="noopener">Política de Privacidad<span class="sr-only"> (se abre en una pestaña nueva)</span></a> y autorizo a Propzen a contactarme por WhatsApp o correo para coordinar mi demo.</span></label>
                 <p class="ct-field__err" id="e-acepto"></p>
+              </div>
+              <!-- Consentimiento para novedades y ofertas: aparte, opcional y no premarcado -->
+              <div class="ct-consent ct-consent--opt">
+                <input type="checkbox" id="f-marketing" name="marketing" value="sí">
+                <label for="f-marketing"><span class="ct-consent__box" aria-hidden="true"></span><span>Quiero recibir novedades y ofertas de Propzen. Puedo darme de baja cuando quiera.</span></label>
               </div>
 
               <div class="hp" aria-hidden="true">
@@ -1782,6 +1787,8 @@
               </button>
               <!-- Error de envío (servidor o conexión): el formulario queda con los datos para reintentar -->
               <p class="ct-form__error" id="formError" role="alert" hidden></p>
+              <!-- Información básica sobre el tratamiento, junto al formulario -->
+              <p class="ct-form__legal">Usaremos tus datos solo para coordinar tu demo y contactarte sobre Propzen. Responsable: Propzen Automatizaciones SpA. Puedes acceder, corregir o eliminar tus datos escribiendo a <a href="mailto:contacto@propzen.cl">contacto@propzen.cl</a>. Más información en nuestra <a href="/privacidad.html" target="_blank" rel="noopener">Política de Privacidad<span class="sr-only"> (se abre en una pestaña nueva)</span></a>.</p>
             </form>
 
             <div class="ct-done" id="formDone" role="group" aria-labelledby="formDoneText" tabindex="-1" hidden>

@@ -1937,6 +1937,8 @@ a.ch[href]:hover, a.ch[href]:focus-visible { transform: translateY(-2px); border
 .ct-consent input[aria-invalid="true"] + label .ct-consent__box { border-color: var(--ct-err); }
 .ct-consent a { color: #FFC400; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .ct-consent .ct-field__err { padding-left: 32px; }
+/* Casilla opcional de novedades: misma forma; sin mensaje de error, deja su propio aire antes del botón */
+.ct-consent--opt { margin-bottom: 18px; }
 
 /* Botón de envío: amarillo, a todo el ancho, con flecha que avanza y estado "Enviando…" */
 .btn.ct-submit { width: 100%; min-height: 56px; margin-top: 8px; box-shadow: 0 12px 28px -10px rgba(255, 196, 0, .5); }
@@ -1946,6 +1948,9 @@ a.ch[href]:hover, a.ch[href]:focus-visible { transform: translateY(-2px); border
 .ct-submit.is-sending .ct-submit__idle { display: none; }
 .ct-submit.is-sending .ct-submit__busy { display: inline-flex; }
 .ct-form__error { margin: 14px 0 0; color: var(--ct-err); font-size: .9rem; font-weight: 600; line-height: 1.45; }
+/* Nota bajo el botón: quién trata los datos y cómo ejercer derechos (papel al 88 % sobre el panel: 10,9:1) */
+.ct-form__legal { margin: 16px 0 0; color: rgba(247, 242, 233, .88); font-size: .8rem; font-weight: 500; line-height: 1.55; }
+.ct-form__legal a { color: #FFC400; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .btn.ct-submit:disabled { cursor: progress; transform: none; }
 .ct-dots i { display: inline-block; font-style: normal; animation: ct-dot 1.2s ease-in-out infinite; }
 .ct-dots i:nth-child(2) { animation-delay: .2s; }

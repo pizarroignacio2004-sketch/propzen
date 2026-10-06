@@ -636,6 +636,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Apps Script de contacto@propzen.cl: reenvía cada solicitud por correo y la guarda en la planilla "Leads Propzen"
   const URL_FORMULARIO = 'https://script.google.com/macros/s/AKfycbw9YyKaPUWJXj20bRNB9Hrhm4mzVCssSzKW6KGjWv7G-Le9k9xgzCrXYcfWGBGSFB9U/exec';
+  // Versión de la Política de Privacidad que se acepta en el formulario: cámbiala junto con privacidad.html
+  const VERSION_POLITICA = '1.0';
   const SEND_ERRORS = {
     datos: 'Revisa los datos del formulario e inténtalo de nuevo.',
     limite: 'Recibimos varias solicitudes seguidas desde tu conexión. Espera unos minutos e inténtalo de nuevo.',
@@ -684,6 +686,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = Object.fromEntries(new FormData(leadForm));
     data.telefono = normTel(data.telefono);   // siempre "+569XXXXXXXX", el formato que exige el Apps Script
     data.acepto = leadForm.elements.acepto.checked;   // la casilla trae el valor "sí": llega como true
+    // Evidencia del consentimiento: casilla obligatoria (sin ella la validación no deja enviar), casilla de novedades,
+    // versión de la política aceptada y momento del envío en ISO 8601 (UTC)
+    data.consentimiento_contacto = data.acepto;
+    data.consentimiento_marketing = leadForm.elements.marketing.checked;
+    delete data.marketing;
+    data.version_politica = VERSION_POLITICA;
+    data.fecha_consentimiento = new Date().toISOString();
 
     btn.disabled = true;
     btn.classList.add('is-sending');
