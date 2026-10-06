@@ -312,6 +312,9 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .footer__legal { flex-basis: 100%; padding-top: 18px; border-top: 1px solid var(--linea); font-size: .85rem; line-height: 1.6; }
 .footer__legal a { color: inherit; text-decoration: underline; text-decoration-color: rgba(46, 61, 66, .4); text-underline-offset: 2px; }
 .footer__legal a:hover { color: var(--pizarra); text-decoration-color: currentColor; }
+/* Correos como texto informativo (no enlace), en el pie y en la nota del formulario:
+   mismo color del texto que los rodea, en peso 600 para distinguirlos */
+.correo { color: inherit; font-weight: 600; text-decoration: none; -webkit-user-select: text; user-select: text; }
 
 /* Aparición al entrar en pantalla (solo con JS activo) */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
@@ -1886,6 +1889,10 @@ a.ch[href]:hover, a.ch[href]:focus-visible { transform: translateY(-2px); border
 .ch__text { display: grid; gap: 2px; min-width: 0; }
 .ch__text strong { font-size: .98rem; font-weight: 700; }
 .ch__text span { overflow-wrap: anywhere; color: rgba(247, 242, 233, .88); font-size: .88rem; font-weight: 500; }
+/* Tarjeta de correos: solo informativa (no es un enlace, así que el efecto de a.ch[href] no la alcanza);
+   cursor normal, texto seleccionable para copiarlo y un correo por línea */
+.ch--mail { cursor: default; -webkit-user-select: text; user-select: text; }
+.ch--mail .ch__text { gap: 3px; }
 .ct__trust { display: flex; align-items: flex-start; gap: 10px; margin: 0; color: rgba(247, 242, 233, .88); font-size: .9rem; font-weight: 500; }
 .ct__trust svg { flex-shrink: 0; width: 20px; height: 20px; fill: none; stroke: #FFC400; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
