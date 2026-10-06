@@ -2116,3 +2116,55 @@ a.ch[href]:hover, a.ch[href]:focus-visible { transform: translateY(-2px); border
   .web-av__tip, .web-av:hover .web-av__tip { transform: translate(-50%, 0); }
   .web-card__check { transform: none; }
 }
+
+/* ===== Páginas legales: privacidad.html, cookies.html y terminos.html =====
+   Mismo hormigón de fondo, encabezado y pie que la portada. El texto va en un panel de papel como los de la página,
+   a unos 72 caracteres por línea. Las tablas se desplazan dentro de su propio contenedor en celular.
+   Contraste: texto pizarra sobre papel 13,7:1 · --texto-2 10,1:1 · encabezado de tabla pizarra sobre #F1EADF 12,6:1. */
+.legal { padding-block: 48px 96px; }
+.legal__panel {
+  max-width: 880px; margin-inline: auto; padding: 44px 56px 56px;
+  border: 1px solid var(--linea); border-radius: 28px; background: var(--papel);
+  box-shadow: 0 34px 64px -40px rgba(43, 36, 31, .5), 0 2px 8px rgba(43, 36, 31, .06);
+}
+/* Selector entre los tres documentos, con la forma de las pestañas de precios */
+.legal__docs { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-bottom: 32px; padding: 5px; border: 1px solid var(--linea); border-radius: 999px; background: var(--yeso); }
+.legal__docs a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; color: var(--texto-2); font-size: .9rem; font-weight: 700; text-decoration: none; }
+.legal__docs a:hover { color: var(--pizarra); text-decoration: underline; text-underline-offset: 3px; }
+.legal__docs a[aria-current="page"] { background: var(--pizarra); color: #FBF8F2; text-decoration: none; }
+.legal__panel h1 { max-width: 20ch; margin: 0 0 12px; color: var(--pizarra); font-size: clamp(2rem, 4.4vw, 2.9rem); font-stretch: 112%; }
+.legal__version { margin: 0 0 8px; color: var(--texto-2); font-size: .92rem; font-weight: 600; }
+.legal__version em { font-style: normal; }
+.legal__panel h2 { margin: 44px 0 12px; color: var(--pizarra); font-size: 1.3rem; font-stretch: 108%; font-weight: 800; line-height: 1.25; scroll-margin-top: 96px; }
+.legal__panel p { max-width: 72ch; margin: 0 0 14px; line-height: 1.7; }
+.legal__panel ul { max-width: 72ch; margin: 0 0 16px; padding-left: 1.3em; }
+.legal__panel li { margin: 6px 0; line-height: 1.6; }
+.legal__panel li::marker { color: var(--plano); }
+.legal__panel :is(p, li, td) a { color: var(--pizarra); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-decoration-color: rgba(43, 36, 31, .45); text-underline-offset: 3px; }
+.legal__panel :is(p, li, td) a:hover { text-decoration-color: var(--pizarra); }
+/* Tablas: el estilo de la comparación de planes; en pantallas angostas se desplazan dentro de su caja */
+.legal__table { margin: 18px 0 26px; overflow-x: auto; border: 1px solid #E6DCCB; border-radius: 14px; background: #FBF8F2; box-shadow: 0 18px 40px -30px rgba(43, 36, 31, .5); }
+/* Sombra suave en el lado que tiene más contenido: avisa que la tabla se desplaza (desaparece al llegar al borde) */
+.legal__table {
+  background:
+    linear-gradient(to right, #FBF8F2 30%, rgba(251, 248, 242, 0)) left center / 32px 100% no-repeat local,
+    linear-gradient(to left, #FBF8F2 30%, rgba(251, 248, 242, 0)) right center / 32px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(43, 36, 31, .18), rgba(43, 36, 31, 0)) left center / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(43, 36, 31, .18), rgba(43, 36, 31, 0)) right center / 12px 100% no-repeat scroll,
+    #FBF8F2;
+}
+.legal__table:focus-visible { outline: 3px solid var(--plano); outline-offset: 3px; }
+.legal__table table { width: 100%; border-collapse: collapse; color: var(--pizarra); font-size: .94rem; text-align: left; }
+.legal__table table:has(th:nth-child(3)) { min-width: 520px; }
+.legal__table table:has(th:nth-child(5)) { min-width: 640px; }
+.legal__table th, .legal__table td { padding: 12px 16px; border-bottom: 1px solid #E6DCCB; line-height: 1.5; text-align: left; vertical-align: top; }
+.legal__table thead th { background: #F1EADF; font-size: .84rem; font-weight: 800; }
+.legal__table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 767px) {
+  .legal { padding-block: 24px 64px; }
+  .legal__panel { padding: 28px 20px 36px; border-radius: 22px; }
+  /* El selector ocupa todo el ancho en tres partes iguales, en una sola línea */
+  .legal__docs { display: flex; margin-bottom: 24px; }
+  .legal__docs a { flex: 1; justify-content: center; padding: 0 8px; font-size: .86rem; }
+  .legal__panel h2 { margin-top: 36px; font-size: 1.18rem; }
+}
