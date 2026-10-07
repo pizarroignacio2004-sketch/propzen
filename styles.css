@@ -632,7 +632,7 @@ body::before {
 .disc__lead, .disc__count,
 .car__lead, .car__foot,
 .section__intro p,
-.imp__lead, .imp__day,
+.imp__day,
 .pr__note, .addons__eyebrow, .addons__lead,
 .web__eyebrow,
 .split__head p, .faq details p { text-shadow: var(--halo-hormigon); }
@@ -642,9 +642,9 @@ body::before {
    Sobresale 18 px arriba y abajo y 16 px a los lados (la primera y la última línea y los extremos de cada línea
    quedan con el velo completo); 16 px es el margen mínimo de la página, así que no crea scroll horizontal. */
 .hero__eyebrow, .lead, .hero__trust, .disc__lead, .disc__count, .car__lead, .car__foot, .section__intro p,
-.imp__lead, .pr__note, .addons__eyebrow, .addons__lead, .web__eyebrow, .faq details p { position: relative; isolation: isolate; }
+.pr__note, .addons__eyebrow, .addons__lead, .web__eyebrow, .faq details p { position: relative; isolation: isolate; }
 .hero__eyebrow::before, .lead::before, .hero__trust::before, .disc__lead::before, .disc__count::before, .car__lead::before,
-.car__foot::before, .section__intro p::before, .imp__lead::before, .pr__note::before, .addons__eyebrow::before,
+.car__foot::before, .section__intro p::before, .pr__note::before, .addons__eyebrow::before,
 .addons__lead::before, .web__eyebrow::before, .faq details p::before {
   content: ""; position: absolute; inset: -18px -16px; z-index: -1; pointer-events: none;
   border-radius: 28px; background: var(--velo-hormigon); filter: blur(8px);
@@ -1035,7 +1035,6 @@ html.intro-on { overflow: hidden; }
 .imp { --imp-ease: cubic-bezier(.22, 1, .36, 1); --sw: 760px; --sh: 440px; --spot-rgb: 120, 100, 80; position: relative; overflow: clip; color: var(--pizarra); }
 .imp__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 40px; margin-bottom: 40px; }
 .imp .section__title { margin-bottom: 0; }
-.imp__lead { max-width: 34ch; margin: 0; font-size: 1.08rem; font-weight: 500; color: var(--texto-2); }
 
 /* Línea de tiempo: tres días arriba y cinco puntos de luz unidos por tramos que se cargan */
 .imp__line { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 4px; max-width: 760px; margin: 0 auto; }
