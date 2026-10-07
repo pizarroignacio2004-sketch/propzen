@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onScroll();
 
   // Aparición escalonada al entrar en pantalla
-  const REVEAL = '.hero__intro, #floor, .split__head, .compare-wrap, .section__title, .does__item, .does__also, .section__intro, .tool, .faq details';
+  const REVEAL = '.hero__intro, #heroVideo, .split__head, .compare-wrap, .section__title, .does__item, .does__also, .section__intro, .tool, .faq details';
   $('#hero-title').classList.add('reveal', 'reveal--hero');
   $$(REVEAL).forEach((el) => {
     el.classList.add('reveal');
@@ -131,124 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
-
-  // Conversación sobre el plano: "escribiendo...", mensaje, scroll y en bucle.
-  // El primer mensaje ya está al cargar, como si entraras a una conversación empezada.
-  const floorLog = $('#floorLog');
-  const bubbles = $$('.bubble:not(.typing-bubble)', floorLog);
-  const typing = $('#floorTyping');
-  const pins = $$('.pin');
-  const confirmCard = $('#confirmCard');
-  const zones = $$('.zone');
-  // Cada paso de la conversación enciende su marcador y resalta su ambiente en el plano
-  const light = (n) => {
-    pins.forEach((p) => p.classList.toggle('is-on', p.dataset.step === n));
-    zones.forEach((z) => z.classList.toggle('is-step', z.dataset.step === n));
-  };
-  const scrollLog = () => animateScroll(floorLog, floorLog.scrollHeight - floorLog.clientHeight, 750, easeOutCubic);
-
-  const showBubble = (b) => {
-    b.hidden = false;
-    requestAnimationFrame(() => requestAnimationFrame(() => b.classList.add('is-visible')));
-    if (b.classList.contains('bubble--in')) light(b.dataset.step);
-    scrollLog();
-  };
-
-  if (reducedMotion) {
-    bubbles.forEach((b) => b.classList.add('is-visible'));
-    confirmCard.classList.add('is-visible');
-  } else {
-    typing.classList.add('is-visible');
-    bubbles.slice(1).forEach((b) => { b.hidden = true; });
-    bubbles[0].classList.add('is-visible');
-    light(bubbles[0].dataset.step);
-
-    const playFloor = async () => {
-      for (const b of bubbles.slice(1)) {
-        await sleep(300);
-        if (b.classList.contains('bubble--out')) {
-          typing.hidden = false;
-          scrollLog();
-          await sleep(850);
-          typing.hidden = true;
-        }
-        showBubble(b);
-        await sleep(1500);
-      }
-      await sleep(400);
-      confirmCard.classList.add('is-visible');
-      await sleep(2400);
-      confirmCard.classList.remove('is-visible');
-      await sleep(1000);
-      // Reinicio: cada burbuja se desvanece y la conversación vuelve a empezar
-      bubbles.slice(1).forEach((b) => b.classList.remove('is-visible'));
-      await sleep(350);
-      bubbles.slice(1).forEach((b) => { b.hidden = true; });
-      floorLog.scrollTop = 0;
-      light(bubbles[0].dataset.step);
-      await sleep(200);
-      playFloor();
-    };
-    whenVisible($('#floor'), playFloor, 0.25);
-  }
-
-
-  // Plano interactivo: cada ambiente muestra sus metros y un dato de venta.
-  // Con mouse aparece al pasar; con teclado, al enfocar; en celular, al tocar.
-  const drawing = $('.floor__drawing');
-  const tip = $('#planTip');
-  const tipName = $('#planTipName');
-  const tipMeta = $('#planTipMeta');
-  let tipZone = null;
-
-  // Resalta en el chat las burbujas del paso que corresponde al ambiente
-  const linkStep = (step) => bubbles.forEach((b) => b.classList.toggle('is-linked', Boolean(step) && b.dataset.step === step));
-
-  const showTip = (zone) => {
-    if (tipZone && tipZone !== zone) tipZone.classList.remove('is-hover');
-    tipZone = zone;
-    zone.classList.add('is-hover');
-    zone.setAttribute('aria-describedby', 'planTip');
-    tipName.textContent = zone.dataset.name;
-    tipMeta.textContent = `${zone.dataset.area} · ${zone.dataset.note}`;
-    // Se ubica sobre el centro del ambiente, sin salirse del recuadro del plano
-    const box = drawing.getBoundingClientRect();
-    const r = zone.getBoundingClientRect();
-    const half = tip.offsetWidth / 2 + 8;
-    const x = Math.min(Math.max(r.left - box.left + r.width / 2, half), box.width - half);
-    const y = r.top - box.top + r.height / 2;
-    tip.classList.toggle('is-below', y - tip.offsetHeight - 14 < 0);
-    tip.style.left = `${x}px`;
-    tip.style.top = `${y}px`;
-    tip.classList.add('is-visible');
-    linkStep(zone.dataset.step);
-  };
-  const hideTip = () => {
-    if (!tipZone) return;
-    tipZone.classList.remove('is-hover');
-    tipZone.removeAttribute('aria-describedby');
-    tipZone = null;
-    tip.classList.remove('is-visible');
-    linkStep(null);
-  };
-
-  zones.forEach((zone) => {
-    zone.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') showTip(zone); });
-    zone.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && document.activeElement !== zone) hideTip(); });
-    zone.addEventListener('focus', () => showTip(zone));
-    zone.addEventListener('blur', () => { if (tipZone === zone) hideTip(); });
-    zone.addEventListener('click', () => showTip(zone));
-    zone.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') { hideTip(); return; }
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (tipZone === zone) hideTip(); else showTip(zone);
-      }
-    });
-  });
-  // Tocar o hacer clic fuera de los ambientes cierra el tooltip
-  document.addEventListener('pointerdown', (e) => { if (tipZone && !e.target.closest('.zone')) hideTip(); });
-  window.addEventListener('resize', hideTip);
 
   // Botones con confirmación temporal (simulación visual, no envían nada)
   const flashButton = (btn, text) => {
@@ -840,318 +722,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-// Hero: cartera de propiedades. Cada 8 s pasa a la siguiente (plano, paleta, etiqueta y pila de fotos) y, dentro
-// de cada una, la foto de arriba cambia cada 2 s. Se pausa con hover o foco sobre el plano, fuera de pantalla, con la
-// pestaña oculta, con el visor abierto o con el botón Pausar. Con movimiento reducido no rota sola.
-// El chat del teléfono no se toca: sigue contando la visita al depa de Ñuñoa, cuyo plano (con los pines) nunca se
-// destruye; solo se oculta cuando hay otra propiedad al frente.
-//
-// Para cambiar una ilustración por una foto real: guarda el archivo en img/propiedades/ y actualiza su src
-// (y su ancho y alto en w y h) en este arreglo. El marco la recorta a 4:3 sin deformarla.
-const CARTERA = [
-  {
-    nombre: 'Depa en Ñuñoa', etiqueta: 'Depa · Ñuñoa · 2D 2B', superficie: 84, precio: '4.900 UF', paleta: 'calida', plano: 'plan-nunoa',
-    fotos: [
-      { src: 'img/propiedades/nunoa-living.jpg', etiqueta: 'Living comedor', zona: 'Living comedor', alt: 'Living comedor con mesa para cuatro y piso de porcelanato', w: 1200, h: 721 },
-      { src: 'img/propiedades/nunoa-cocina.jpg', etiqueta: 'Cocina', zona: 'Cocina', alt: 'Cocina en L con muebles negros y ventana', w: 1200, h: 737 },
-      { src: 'img/propiedades/nunoa-dormitorio.jpg', etiqueta: 'Dormitorio 1', zona: 'Dormitorio 1', alt: 'Dormitorio principal con cama de dos plazas', w: 1067, h: 776 },
-      { src: 'img/propiedades/nunoa-escritorio.jpg', etiqueta: 'Dormitorio 2 · oficina', zona: 'Dormitorio 2', alt: 'Segundo dormitorio usado como oficina con escritorio', w: 623, h: 776 },
-      { src: 'img/propiedades/nunoa-terraza.jpg', etiqueta: 'Terraza', zona: 'Terraza', alt: 'Terraza con plantas y mesa para dos al atardecer', w: 840, h: 776 },
-    ],
-  },
-  {
-    nombre: 'Depa en Providencia', etiqueta: 'Depa · Providencia · 1D 1B', superficie: 52, precio: '3.950 UF', paleta: 'nordica', plano: 'plan-providencia',
-    fotos: [
-      { src: 'img/propiedades/providencia-living.svg', etiqueta: 'Living', zona: 'Living y cocina', alt: 'Ilustración del living con sofá azul petróleo y ventanal', w: 800, h: 600 },
-      { src: 'img/propiedades/providencia-cocina.svg', etiqueta: 'Cocina americana', zona: 'Living y cocina', alt: 'Ilustración de la cocina americana con barra y dos pisos', w: 800, h: 600 },
-      { src: 'img/propiedades/providencia-dormitorio.svg', etiqueta: 'Dormitorio', zona: 'Dormitorio', alt: 'Ilustración del dormitorio con cama de dos plazas y cortinas livianas', w: 800, h: 600 },
-      { src: 'img/propiedades/providencia-balcon.svg', etiqueta: 'Balcón', zona: 'Balcón', alt: 'Ilustración del balcón con dos sillas y vista a la cordillera', w: 800, h: 600 },
-    ],
-  },
-  {
-    nombre: 'Casa en La Reina', etiqueta: 'Casa · La Reina · 3D 2B', superficie: 120, precio: '9.800 UF', paleta: 'mediterranea', plano: 'plan-lareina',
-    fotos: [
-      { src: 'img/propiedades/lareina-living.svg', etiqueta: 'Living', zona: 'Living', alt: 'Ilustración del living con piso de terracota y ventana en arco', w: 800, h: 600 },
-      { src: 'img/propiedades/lareina-cocina.svg', etiqueta: 'Cocina', zona: 'Cocina', alt: 'Ilustración de la cocina con isla de madera y azulejos azules', w: 800, h: 600 },
-      { src: 'img/propiedades/lareina-dormitorio.svg', etiqueta: 'Dormitorio principal', zona: 'Dormitorio 1', alt: 'Ilustración del dormitorio principal con cama de dos plazas y vista al jardín', w: 800, h: 600 },
-      { src: 'img/propiedades/lareina-patio.svg', etiqueta: 'Patio', zona: 'Patio', alt: 'Ilustración del patio con pasto, parrilla y un limonero', w: 800, h: 600 },
-    ],
-  },
-  {
-    nombre: 'Depa en Santiago Centro', etiqueta: 'Depa · Santiago Centro · Studio', superficie: 38, precio: '2.450 UF', paleta: 'urbana', plano: 'plan-centro',
-    fotos: [
-      { src: 'img/propiedades/centro-ambiente.svg', etiqueta: 'Ambiente', zona: 'Ambiente', alt: 'Ilustración del ambiente único con zona de cama tras un librero', w: 800, h: 600 },
-      { src: 'img/propiedades/centro-cocina.svg', etiqueta: 'Cocina lineal', zona: 'Cocina', alt: 'Ilustración de la cocina lineal con muebles negros y repisas', w: 800, h: 600 },
-      { src: 'img/propiedades/centro-bano.svg', etiqueta: 'Baño', zona: 'Baño', alt: 'Ilustración del baño con mampara de vidrio y espejo redondo iluminado', w: 800, h: 600 },
-      { src: 'img/propiedades/centro-vista.svg', etiqueta: 'Vista', zona: 'Ambiente', alt: 'Ilustración de la vista a la ciudad desde la ventana al atardecer', w: 800, h: 600 },
-    ],
-  },
-];
-
+// Hero: video introductorio. Arranca solo, en silencio y en bucle cuando está en pantalla; en la primera visita
+// espera a que termine la intro de obra, para que se vea desde el comienzo. Fuera de pantalla se pausa y al volver
+// sigue. El <video> no lleva el atributo autoplay a propósito: así el navegador no descarga los megas del video
+// hasta que este se acerca a la pantalla (en celular queda bajo el pliegue); lo inicia este script.
+// Con "reducir movimiento" queda el póster con el botón Reproducir; si el navegador bloquea la reproducción
+// automática (por ejemplo, iPhone en modo de bajo consumo), aparece el mismo botón. Mientras corre, el botón
+// queda en la esquina como "Pausar video".
 document.addEventListener('DOMContentLoaded', () => {
-  const floor = document.getElementById('floor');
-  if (!floor) return;
-  const $ = (s, el = floor) => el.querySelector(s);
-  const $$ = (s, el = floor) => [...el.querySelectorAll(s)];
-  const drawing = $('.floor__drawing');
-  const plans = CARTERA.map((p) => document.getElementById(p.plano));
-  const dots = $$('.prop-dot');
-  const pauseBtn = $('.prop-pause');
-  const stacksEl = $('#pstacks');
-  const tag = $('#propTag');
-  const live = $('#propLive');
-  const box = document.getElementById('pbox');
+  const wrap = document.getElementById('heroVideo');
+  if (!wrap) return;
+  const video = wrap.querySelector('video');
+  if (video.dataset.poster) video.poster = video.dataset.poster;   // ver el comentario del <video> en index.html
+  const btn = wrap.querySelector('.hero-video__btn');
+  const label = btn.querySelector('.hero-video__label');
+  const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mqMobile = window.matchMedia('(max-width: 767px)');
-  const EASE = 'cubic-bezier(.22, 1, .36, 1)';
-  const PROP_MS = 8000, PHOTO_MS = 2000, PRELOAD_MS = 6500;
-  const n = CARTERA.length;
-  let active = 0;
-  const photoIdx = CARTERA.map(() => 0);
-  const stacks = [];
-  floor.classList.toggle('is-reduced', reduced);
+  const hasIO = 'IntersectionObserver' in window;
+  let wanted = !reduced;      // corre salvo que la persona, el sistema o el navegador digan lo contrario
+  let onScreen = !hasIO;
 
-  // ---- Pila de fotos (una por propiedad, se arma cuando hace falta) ----
-  const cardsOf = (i) => [...stacks[i].children];
-  const label = (i) => {
-    const p = CARTERA[i], f = p.fotos[photoIdx[i]];
-    stacks[i].setAttribute('aria-label', `Fotos de ${p.nombre}: ${f.etiqueta}, ${photoIdx[i] + 1} de ${p.fotos.length}. Pulsa para ampliar.`);
+  // El botón refleja la intención y no el estado real: al pausarse fuera de pantalla no cambia y no salta al volver
+  const render = () => {
+    wrap.classList.toggle('is-playing', wanted);
+    label.textContent = wanted ? 'Pausar video' : 'Reproducir video';
   };
-  const setDepths = (i) => {
-    const cards = cardsOf(i), m = cards.length;
-    cards.forEach((c, k) => { const d = (k - photoIdx[i] + m) % m; c.dataset.depth = d < 3 ? String(d) : 'x'; });
-    label(i);
+  const showBtn = () => { render(); btn.hidden = false; };
+  const play = () => {
+    const p = video.play();
+    // Solo NotAllowedError es un bloqueo real; AbortError ocurre si se pausa antes de arrancar (pasar rápido de largo)
+    if (p && p.catch) p.catch((err) => { if (err && err.name === 'NotAllowedError') { wanted = false; showBtn(); } });
   };
-  const buildStack = (i) => {
-    if (stacks[i]) return stacks[i];
-    const p = CARTERA[i];
-    const el = document.createElement('div');
-    el.className = 'pstack';
-    el.setAttribute('role', 'button');
-    el.tabIndex = -1;
-    p.fotos.forEach((f, k) => {
-      const fig = document.createElement('figure');
-      fig.className = 'pcard';
-      const img = document.createElement('img');
-      img.src = f.src; img.alt = f.alt; img.width = f.w; img.height = f.h; img.decoding = 'async';
-      // La primera foto de Ñuñoa carga de inmediato; el resto, en diferido
-      if (i === 0 && k === 0) { img.loading = 'eager'; img.fetchPriority = 'high'; } else img.loading = 'lazy';
-      const cap = document.createElement('figcaption');
-      const lab = document.createElement('span'); lab.className = 'pcard__label'; lab.textContent = f.etiqueta;
-      const cnt = document.createElement('span'); cnt.className = 'pcard__count'; cnt.textContent = `${k + 1}/${p.fotos.length}`;
-      cap.append(lab, cnt);
-      fig.append(img, cap);
-      el.append(fig);
-    });
-    el.addEventListener('click', (e) => {
-      const fig = e.target.closest('.pcard');
-      openBox(i, mqMobile.matches && fig ? cardsOf(i).indexOf(fig) : photoIdx[i]);
-    });
-    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBox(i, photoIdx[i]); } });
-    // En celular el usuario también puede deslizar la tira: la foto actual sigue a la que quedó al inicio
-    let scrollT = 0;
-    el.addEventListener('scroll', () => {
-      if (!mqMobile.matches) return;
-      clearTimeout(scrollT);
-      scrollT = setTimeout(() => {
-        const cards = cardsOf(i);
-        const stepX = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1;
-        photoIdx[i] = Math.max(0, Math.min(cards.length - 1, Math.round(el.scrollLeft / stepX)));
-        setDepths(i);
-      }, 140);
-    }, { passive: true });
-    stacksEl.append(el);
-    stacks[i] = el;
-    setDepths(i);
-    return el;
-  };
-  // Precarga: arma la pila (sus imágenes quedan listas) y pide los archivos al navegador
-  const preload = (i) => { buildStack(i); CARTERA[i].fotos.forEach((f) => { const im = new Image(); im.src = f.src; }); };
-
-  // Muestra la foto k: la de arriba sale hacia la izquierda con un giro y la siguiente sube desde atrás
-  const showPhoto = (i, target) => {
-    const el = stacks[i];
-    if (!el) return;
-    const cards = cardsOf(i), m = cards.length;
-    const k = ((target % m) + m) % m;
-    if (k === photoIdx[i]) return;
-    const prevTop = cards[photoIdx[i]];
-    photoIdx[i] = k;
-    if (mqMobile.matches) {
-      el.scrollTo({ left: cards[k].offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
-      setDepths(i);
-      return;
-    }
-    if (!reduced) {
-      prevTop.getAnimations().forEach((a) => a.cancel());
-      prevTop.classList.add('is-out');
-      prevTop.animate(
-        [{ transform: 'none', opacity: 1 }, { transform: 'translate(-118%, 6%) rotate(-14deg)', opacity: 0 }],
-        { duration: 650, easing: EASE },
-      ).finished.then(() => prevTop.classList.remove('is-out'), () => prevTop.classList.remove('is-out'));
-    }
-    setDepths(i);
-    if (reduced) cards[k].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease' });
+  const update = () => {
+    if (wanted && onScreen && !root.classList.contains('intro-on')) { if (video.paused) play(); }
+    else if (!video.paused) video.pause();
   };
 
-  // ---- Cambio de propiedad: plano, pila, etiqueta, puntos ----
-  const swapPlan = (prev, next) => {
-    plans.forEach((p) => { p.getAnimations({ subtree: true }).forEach((a) => a.cancel()); p.classList.remove('is-leaving'); });
-    const out = plans[prev], inn = plans[next];
-    out.classList.remove('is-active');
-    out.classList.add('is-leaving');
-    inn.classList.add('is-active');
-    const done = () => out.classList.remove('is-leaving');
-    if (reduced) {
-      inn.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
-      out.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, easing: 'ease', fill: 'forwards' }).finished.then(done, () => {});
-      return;
-    }
-    // 1) el mobiliario se apaga (200 ms)
-    $$('.f-room', out).forEach((f) => f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: EASE, fill: 'forwards' }));
-    // 2) los muros cambian con un fundido cruzado y una escala leve (.96 → 1)
-    out.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, delay: 160, easing: EASE, fill: 'both' }).finished.then(done, () => {});
-    inn.animate([{ opacity: 0, transform: 'scale(.96)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 480, delay: 160, easing: EASE, fill: 'backwards' });
-    // 3) el mobiliario nuevo entra escalonado por ambiente (40 ms entre cada uno; menos si hay muchos ambientes)
-    const rooms = $$('.f-room', inn);
-    const step = Math.min(40, 240 / Math.max(1, rooms.length - 1));
-    rooms.forEach((f, k) => f.animate(
-      [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }],
-      { duration: 240, delay: 420 + k * step, easing: EASE, fill: 'backwards' },
-    ));
-  };
-  const setTag = (i) => {
-    const p = CARTERA[i];
-    $('#propTagName').textContent = `${p.etiqueta} · ${p.superficie} m²`;
-    $('#propTagPrice').textContent = p.precio;
-  };
+  if (reduced) showBtn();                                    // solo el póster y "Reproducir video"
+  else video.addEventListener('playing', showBtn, { once: true });
 
-  let propT = 0, photoT = 0, preloaded = false;
-  function goProp(target) {
-    const i = ((target % n) + n) % n;
-    if (i === active) return;
-    const prev = active;
-    active = i;
-    swapPlan(prev, i);
-    buildStack(i);
-    photoIdx[i] = 0;
-    setDepths(i);
-    stacks[i].scrollLeft = 0;
-    stacks.forEach((s, k) => { if (!s) return; s.classList.toggle('is-active', k === i); s.tabIndex = k === i ? 0 : -1; });
-    tag.getAnimations().forEach((a) => a.cancel());
-    tag.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, easing: EASE }).finished
-      .then(() => { setTag(active); tag.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: EASE }); }, () => setTag(active));
-    dots.forEach((d, k) => {
-      if (k === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
-      d.querySelector('i').style.setProperty('--p', '0');
-    });
-    live.textContent = `Propiedad ${i + 1} de ${n}: ${CARTERA[i].nombre}`;
-    propT = 0; photoT = 0; preloaded = false;
-  }
-
-  // Al pasar sobre un ambiente (o enfocarlo o tocarlo), la pila salta a la foto de ese ambiente si existe
-  plans.forEach((plan, i) => plan.querySelectorAll('.zone').forEach((z) => {
-    const jump = () => {
-      if (i !== active) return;
-      const k = CARTERA[i].fotos.findIndex((f) => f.zona === z.dataset.name);
-      if (k >= 0) { photoT = 0; showPhoto(i, k); }
-    };
-    z.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') jump(); });
-    z.addEventListener('focus', jump);
-    z.addEventListener('click', jump);
-  }));
-
-  // ---- Reloj: avanza solo mientras nada lo pausa; la barra del punto activo muestra los 8 s ----
-  const pause = { user: false, hover: false, focus: false, touch: false, box: false, offscreen: true, hidden: document.hidden };
-  const running = () => !reduced && !Object.values(pause).some(Boolean);
-  let raf = 0, last = 0;
-  const tick = (now) => {
-    const dt = last ? Math.min(64, now - last) : 0;
-    last = now;
-    propT += dt; photoT += dt;
-    dots[active].querySelector('i').style.setProperty('--p', Math.min(1, propT / PROP_MS).toFixed(4));
-    if (!preloaded && propT >= PRELOAD_MS) { preloaded = true; preload((active + 1) % n); }
-    if (propT >= PROP_MS) goProp(active + 1);
-    else if (photoT >= PHOTO_MS) { photoT = 0; showPhoto(active, photoIdx[active] + 1); }
-    raf = requestAnimationFrame(tick);
-  };
-  const syncPause = () => {
-    const run = running();
-    floor.classList.toggle('is-user-paused', pause.user);
-    const word = pause.user ? 'Reanudar' : 'Pausar';
-    pauseBtn.querySelector('span').textContent = word;
-    pauseBtn.setAttribute('aria-label', `${word} la rotación de propiedades`);
-    live.setAttribute('aria-live', run ? 'off' : 'polite');   // mientras rota sola no se anuncia cada cambio
-    if (run && !raf) { last = 0; raf = requestAnimationFrame(tick); }
-    else if (!run && raf) { cancelAnimationFrame(raf); raf = 0; }
-  };
-
-  dots.forEach((d, k) => d.addEventListener('click', () => goProp(k)));
-  pauseBtn.addEventListener('click', () => { pause.user = !pause.user; syncPause(); });
-  drawing.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { pause.hover = true; syncPause(); } });
-  drawing.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { pause.hover = false; syncPause(); } });
-  drawing.addEventListener('focusin', (e) => { pause.focus = e.target.matches(':focus-visible'); syncPause(); });
-  drawing.addEventListener('focusout', (e) => { if (!drawing.contains(e.relatedTarget)) { pause.focus = false; syncPause(); } });
-  let touchT = 0;
-  drawing.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') { clearTimeout(touchT); pause.touch = true; syncPause(); } });
-  drawing.addEventListener('pointerup', (e) => {
-    if (e.pointerType !== 'touch') return;
-    clearTimeout(touchT);
-    touchT = setTimeout(() => { pause.touch = false; syncPause(); }, 4000);
+  btn.addEventListener('click', () => {
+    wanted = !wanted;
+    render();
+    update();
   });
-  document.addEventListener('visibilitychange', () => { pause.hidden = document.hidden; syncPause(); });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([e]) => { pause.offscreen = !e.isIntersecting; syncPause(); }, { threshold: 0.2 }).observe(drawing);
-  } else pause.offscreen = false;
 
-  // ---- Visor de fotos: atrapa el foco (diálogo modal), Esc o el botón lo cierran y el foco vuelve a la pila ----
-  let boxProp = 0, boxIdx = 0, boxFrom = null;
-  const boxImg = document.getElementById('pboxImg');
-  const renderBox = () => {
-    const p = CARTERA[boxProp], f = p.fotos[boxIdx];
-    boxImg.src = f.src; boxImg.alt = f.alt; boxImg.width = f.w; boxImg.height = f.h;
-    document.getElementById('pboxTitle').textContent = `${p.etiqueta} · ${p.superficie} m² · ${p.precio}`;
-    document.getElementById('pboxCap').textContent = f.etiqueta;
-    document.getElementById('pboxCount').textContent = `${boxIdx + 1}/${p.fotos.length}`;
-  };
-  const stepBox = (d) => {
-    const m = CARTERA[boxProp].fotos.length;
-    boxIdx = (boxIdx + d + m) % m;
-    renderBox();
-    boxImg.animate(reduced ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: `translateX(${d * 16}px)` }, { opacity: 1, transform: 'none' }], { duration: 260, easing: EASE });
-  };
-  function openBox(i, k) {
-    if (!box || typeof box.showModal !== 'function') return;
-    boxProp = i; boxIdx = k; boxFrom = stacks[i];
-    renderBox();
-    box.showModal();
-    pause.box = true; syncPause();
-    box.animate(reduced ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: 'scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: EASE });
+  if (hasIO) {
+    // Precarga cuando el video está a menos de media pantalla de distancia (en la primera visita, durante la intro),
+    // pero recién después del evento load: los megas del video no compiten con lo que necesita la primera pintura
+    const afterLoad = (fn) => (document.readyState === 'complete' ? fn() : window.addEventListener('load', fn, { once: true }));
+    const near = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || !wanted) return;
+      near.disconnect();
+      afterLoad(() => { video.preload = 'auto'; });
+    }, { rootMargin: '50% 0px' });
+    near.observe(wrap);
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      update();
+    }).observe(wrap);
   }
-  if (box) {
-    box.querySelector('.pbox__nav--prev').addEventListener('click', () => stepBox(-1));
-    box.querySelector('.pbox__nav--next').addEventListener('click', () => stepBox(1));
-    box.querySelector('.pbox__close').addEventListener('click', () => box.close());
-    box.addEventListener('click', (e) => { if (e.target === box) box.close(); });   // clic en el fondo
-    box.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); stepBox(-1); }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); stepBox(1); }
+  // La intro de obra quita .intro-on de <html> al terminar (o al saltarla)
+  if (root.classList.contains('intro-on')) {
+    const mo = new MutationObserver(() => {
+      if (root.classList.contains('intro-on')) return;
+      mo.disconnect();
+      update();
     });
-    box.addEventListener('close', () => {
-      pause.box = false;
-      if (boxProp === active && boxIdx !== photoIdx[active]) showPhoto(active, boxIdx);   // la pila queda en la foto vista
-      photoT = 0;
-      syncPause();
-      if (boxFrom) boxFrom.focus({ preventScroll: true });
-    });
+    mo.observe(root, { attributes: true, attributeFilter: ['class'] });
   }
-
-  // Estado inicial: Ñuñoa con su primera foto
-  buildStack(0);
-  stacks[0].classList.add('is-active');
-  stacks[0].tabIndex = 0;
-  setTag(0);
-  syncPause();
+  update();
 });
 
 // ===== Intro de obra: ladrillos → vaciado de hormigón → logo → página =====

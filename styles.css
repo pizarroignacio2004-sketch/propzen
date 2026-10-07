@@ -100,8 +100,7 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .btn--small { min-height: 42px; padding: 0 1.1em; font-size: .95rem; }
 
 /* Contenedor común del header y el hero.
-   --page-max es el ancho del escenario del hero (del borde izquierdo de la tarjeta del plano al borde derecho del
-   teléfono); --gutter, el margen lateral. El contenedor suma los dos márgenes para que el contenido mida --page-max. */
+   --page-max es el ancho del escenario del hero (el ancho del video); --gutter, el margen lateral. El contenedor suma los dos márgenes para que el contenido mida --page-max. */
 :root { --page-max: 1320px; --gutter: clamp(16px, 4vw, 48px); }
 .wrap--wide { width: 100%; max-width: calc(var(--page-max) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
 
@@ -142,114 +141,41 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .lead { font-size: 1.15rem; font-weight: 500; color: var(--texto-2); max-width: 58ch; margin: 0; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* Escena del hero: plano | teléfono (contenedor .wrap--wide, definido junto a la navegación) */
-.floor {
-  margin: 40px 0 0; display: grid; gap: 48px; align-items: center;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  grid-template-areas: "plan phone";
+/* Video del hero (contenedor .wrap--wide, definido junto a la navegación).
+   aspect-ratio reserva el alto antes de que cargue el video (sin saltos de diseño); el fondo espresso evita el
+   destello blanco mientras llega el primer cuadro. El video es 16:9 exacto: object-fit no recorta nada. */
+.hero-video {
+  position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 40px 0 0; overflow: hidden;
+  background: #0B0806; border-radius: 12px; isolation: isolate;
+  box-shadow: 0 30px 60px -26px rgba(43, 36, 31, .6), 0 0 0 1px rgba(43, 36, 31, .12);
 }
-.floor__drawing { grid-area: plan; position: relative; padding: 24px; background: var(--papel); border: 1px solid var(--linea); border-radius: 12px; }
-.floor__phone { --phone-w: 360px; grid-area: phone; display: grid; justify-items: center; }
-
-/* Plano */
-.floor__drawing .grid { stroke: #E2D7C4; stroke-width: 1; }
-.floor__drawing .wall { fill: none; stroke: var(--pizarra); stroke-width: 8; stroke-linecap: square; }
-.floor__drawing .wall--in { stroke-width: 5; }
-.floor__drawing .thin { fill: none; stroke: var(--plano); stroke-width: 1.5; }
-.floor__drawing .furniture .thin { stroke-width: 1.2; stroke-linejoin: round; }
-.floor__drawing .dashed { stroke-dasharray: 5 4; }
-.floor__drawing .dim { fill: none; stroke: var(--plano); stroke-width: 1; }
-.floor__drawing .dim-t { font: 500 12px var(--font); fill: var(--plano); text-anchor: middle; }
-.floor__drawing .room { font: 600 14px var(--font); fill: var(--pizarra); text-anchor: middle; }
-.floor__drawing .area { font: 400 12px var(--font); fill: var(--grafito); text-anchor: middle; }
-.floor__drawing .t-end { text-anchor: end; }
-.floor__drawing text, .pin { pointer-events: none; }
-.pin circle { fill: var(--papel); stroke: var(--plano); stroke-width: 2; transition: fill .3s, stroke .3s; }
-.pin text { font: 700 13px var(--font); fill: var(--plano); text-anchor: middle; transition: fill .3s; }
-.pin.is-on circle { fill: var(--cartel); stroke: var(--pizarra); }
-.pin.is-on text { fill: var(--pizarra); }
-
-/* Ambientes interactivos */
-.zone {
-  fill: rgba(62, 85, 71, 0); stroke: rgba(62, 85, 71, 0); stroke-width: 2; cursor: pointer; outline: none;
-  transition: fill .2s ease, stroke .2s ease;
+.hero-video__media { display: block; width: 100%; height: 100%; object-fit: cover; background: #0B0806; }
+/* Botón: "Pausar video" discreto en la esquina mientras corre; "Reproducir video" centrado cuando está detenido
+   (movimiento reducido, reproducción automática bloqueada o pausa manual) */
+.hero-video__btn {
+  position: absolute; right: 14px; bottom: 14px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px 0 12px;
+  border: 1px solid rgba(251, 248, 242, .28); border-radius: 999px; cursor: pointer; white-space: nowrap;
+  background: rgba(11, 8, 6, .62); color: #FBF8F2; font: 600 .88rem/1 var(--font);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: .78; transition: opacity .2s ease, background-color .2s ease;
 }
-.zone.is-step { fill: rgba(200, 172, 116, .2); }
-.zone:hover, .zone.is-hover { fill: rgba(62, 85, 71, .1); stroke: var(--plano); }
-.zone:focus-visible { fill: rgba(62, 85, 71, .1); stroke: var(--plano); stroke-width: 3; stroke-dasharray: 7 4; }
-.plan-tip {
-  position: absolute; z-index: 4; width: max-content; max-width: min(260px, 80%);
-  padding: 10px 12px; border-radius: 8px; background: var(--pizarra); color: #FBF8F2;
-  font-size: .85rem; line-height: 1.4; pointer-events: none;
-  box-shadow: 0 12px 26px -12px rgba(43, 36, 31, .6);
-  opacity: 0; visibility: hidden; transform: translate(-50%, calc(-100% - 4px));
-  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+.hero-video__btn:hover, .hero-video__btn:focus-visible { opacity: 1; background: rgba(11, 8, 6, .82); }
+.hero-video__btn:focus-visible { outline: 3px solid var(--logo); outline-offset: 3px; }
+.hero-video__ico { width: 16px; height: 16px; flex-shrink: 0; }
+.hero-video__ico--play { fill: currentColor; }
+.hero-video__ico--pause { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+.hero-video.is-playing .hero-video__ico--play, .hero-video:not(.is-playing) .hero-video__ico--pause { display: none; }
+.hero-video:not(.is-playing) .hero-video__btn {
+  right: 50%; bottom: 50%; transform: translate(50%, 50%);
+  min-height: 52px; padding: 0 22px 0 18px; font-size: 1rem; opacity: 1; background: rgba(11, 8, 6, .78);
 }
-.plan-tip.is-below { transform: translate(-50%, 4px); }
-.plan-tip.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, calc(-100% - 10px)); transition: opacity .18s ease, transform .18s ease; }
-.plan-tip.is-below.is-visible { transform: translate(-50%, 10px); }
-.plan-tip strong { color: var(--cartel); }
-.plan-tip span { display: block; color: #EEE6D8; }
-
-/* Teléfono dibujado con CSS (proporción 9:19.5) */
-.phone {
-  position: relative; width: var(--phone-w); max-width: 100%; aspect-ratio: 9 / 19.5;
-  padding: 11px; border-radius: 44px; background: var(--pizarra);
-  box-shadow: 0 30px 60px -26px rgba(43, 36, 31, .6), inset 0 0 0 2px rgba(251, 248, 242, .08);
+/* Celular: el video va a todo el ancho con el margen de 16 px de la página; botón de pausa más compacto */
+@media (max-width: 767px) {
+  .hero-video { margin-top: 32px; border-radius: 10px; }
+  .hero-video.is-playing .hero-video__btn { right: 8px; bottom: 8px; min-height: 34px; padding: 0 10px; font-size: .8rem; }
+  .hero-video.is-playing .hero-video__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
-.phone::before, .phone::after { content: ""; position: absolute; width: 3px; border-radius: 2px; background: var(--pizarra); }
-.phone::before { left: -3px; top: 22%; height: 9%; }
-.phone::after { right: -3px; top: 27%; height: 14%; }
-.phone__screen { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 34px; background: var(--papel); }
-.phone__status { position: relative; flex-shrink: 0; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 4px 26px 0 30px; font-size: .82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.phone__island { position: absolute; top: 10px; left: 50%; width: 30%; height: 26px; border-radius: 999px; background: var(--pizarra); transform: translateX(-50%); }
-.phone__icons { display: flex; align-items: center; gap: 5px; }
-.phone__icons svg { height: 11px; width: auto; fill: var(--pizarra); }
-.phone__icons .bat { height: 12px; }
-.phone__input { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 6px 10px 0; padding: 7px 7px 7px 14px; border: 1px solid var(--linea); border-radius: 999px; background: #FBF8F2; font-size: .82rem; color: var(--grafito); }
-.phone__send { width: 30px; height: 30px; border-radius: 50%; background: var(--plano); display: grid; place-items: center; }
-.phone__send svg { width: 15px; height: 15px; fill: none; stroke: #FBF8F2; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.phone__home { position: relative; flex-shrink: 0; height: 24px; }
-.phone__home::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 36%; height: 5px; border-radius: 999px; background: var(--pizarra); transform: translateX(-50%); }
-
-/* Chat dentro del teléfono: entra mensaje por mensaje, con "escribiendo..." y en bucle */
-.floor__log { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-.floor__head { flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 8px 16px 10px; border-bottom: 1px solid var(--linea); }
-.floor__head strong { display: block; font-size: .88rem; line-height: 1.25; }
-.floor__avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--plano); color: #FBF8F2; display: grid; place-items: center; font-weight: 800; flex-shrink: 0; }
-.floor__status { display: inline-flex; align-items: center; gap: 6px; font-size: .76rem; color: var(--grafito); }
-.live { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: live-pulse 2.2s infinite; }
-@keyframes live-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(62, 85, 71, .5); }
-  70% { box-shadow: 0 0 0 6px rgba(62, 85, 71, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(62, 85, 71, 0); }
-}
-.log { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 14px 12px; display: flex; flex-direction: column; gap: 8px; }
-.log::-webkit-scrollbar { display: none; }
-.bubble { margin: 0; max-width: 86%; padding: 8px 12px; font-size: .86rem; line-height: 1.42; flex-shrink: 0; transition: box-shadow .2s ease; }
-.bubble--in { align-self: flex-end; background: var(--pizarra); color: #FBF8F2; border-radius: 14px 14px 3px 14px; }
-.bubble--out { align-self: flex-start; background: #FBF8F2; border: 1px solid var(--linea); border-radius: 14px 14px 14px 3px; }
-.bubble__pin { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 7px; border-radius: 50%; background: var(--cartel); color: var(--pizarra); font-size: .7rem; font-weight: 800; vertical-align: 1px; }
-.bubble.is-linked { box-shadow: 0 0 0 3px rgba(200, 172, 116, .9); }
-.typing-bubble { padding: 11px 14px; }
-.js .bubble { opacity: 0; transform: translateY(10px) scale(.97); transition: opacity .35s ease, transform .35s ease, box-shadow .2s ease; }
-.js .bubble.is-visible { opacity: 1; transform: none; }
-
-
-/* "Visita confirmada": notificación que baja desde arriba de la pantalla */
-.confirm {
-  position: absolute; top: 8px; left: 50%; z-index: 5; width: 88%;
-  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-  background: rgba(251, 248, 242, .97); border: 1px solid var(--linea); border-radius: 16px;
-  box-shadow: 0 14px 30px -14px rgba(43, 36, 31, .5);
-  opacity: 0; transform: translate(-50%, -130%);
-  transition: opacity .4s var(--ease), transform .45s var(--ease); pointer-events: none;
-}
-.confirm.is-visible { opacity: 1; transform: translate(-50%, 0); }
-.confirm__icon { width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: var(--ok-bg); color: var(--ok); display: grid; place-items: center; font-weight: 800; }
-.confirm strong { display: block; font-size: .86rem; }
-.confirm span:not(.confirm__icon) { font-size: .78rem; color: var(--grafito); }
-
 
 /* Secciones */
 .section { padding-block: 96px; }
@@ -280,12 +206,6 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .does__item p { color: var(--grafito); margin: 0; }
 .does__also { margin: 40px 0 0; font-size: 1.05rem; max-width: 60ch; }
 
-/* Puntos de "escribiendo..." del chat del hero (#floorTyping) */
-.typing { display: inline-flex; gap: 4px; padding: 4px 0; }
-.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--grafito); animation: typing-bounce 1s infinite; }
-@keyframes typing-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
-.typing i:nth-child(2) { animation-delay: .15s; }
-.typing i:nth-child(3) { animation-delay: .3s; }
 @keyframes blink { 50% { opacity: .25; } }
 
 /* FAQ */
@@ -438,11 +358,10 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 .modal__actions { display: grid; gap: 10px; }
 
 /* Responsive */
-/* iPad: plano a todo el ancho; debajo, teléfono y agenda lado a lado */
+/* iPad */
 @media (max-width: 1199px) {
   .logo__icon { width: 36px; height: 36px; }
-  .floor { grid-template-columns: minmax(0, 1fr) 300px; gap: 32px; grid-template-areas: "plan phone"; }
-  .floor__phone { --phone-w: 300px; }
+
 }
 /* Notebook e iPad horizontal: la misma grilla de 3 columnas, con links algo más juntos y a 15 px */
 @media (min-width: 1024px) and (max-width: 1199px) {
@@ -475,19 +394,12 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
   .does__item:nth-child(3) { border-left: 0; padding-left: 0; }
   .does__item:nth-child(n+3) { padding-top: 32px; }
 }
-/* Celular: plano, teléfono y agenda apilados */
+/* Celular */
 @media (max-width: 767px) {
   .logo__icon { width: 32px; height: 32px; }
-  .floor { grid-template-columns: minmax(0, 1fr); grid-template-areas: "plan" "phone"; gap: 20px; }
-  .floor__phone { --phone-w: min(340px, 88vw); }
-  .floor__drawing { padding: 12px; }
+
   /* En pantallas chicas el plano se reduce a menos de la mitad: se agrandan rótulos y marcadores */
-  .floor__drawing .room { font-size: 22px; }
-  .floor__drawing .area { display: none; }
-  .floor__drawing .dim-t { font-size: 20px; }
-  .floor__drawing .dim-t--v { display: none; }
-  .pin circle { r: 18px; }
-  .pin text { font-size: 18px; }
+
 }
 @media (max-width: 760px) {
   .tool { padding: 10px; }
@@ -649,55 +561,6 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
   background-color: var(--umbra);
   background-image: linear-gradient(rgba(85, 73, 63, .84), rgba(85, 73, 63, .84)), var(--tex-lava);
   background-size: auto, 460px;
-}
-
-/* Plano a color: cuatro paletas de materiales, una por propiedad de la cartera del hero.
-   Cada paleta es un conjunto de variables que se aplica a la capa de su plano (g.prop-plan.floor--…);
-   los elementos del SVG solo leen esas variables. #floor no lleva paleta: usa la cálida por defecto. */
-.floor, .floor--calida {
-  --mat-muro: #5B3A29; --mat-piso: #E2A65A; --mat-cubierta: #1FA36B; --mat-vein: #137A4E; --mat-mueble: #2B2D42; --mat-acento: #FFB703;
-}
-.floor { --planta: #2BB35F; }
-.floor--nordica { --mat-muro: #E6EDF5; --mat-piso: #F2D49B; --mat-cubierta: #FFFFFF; --mat-vein: #B8C4D0; --mat-mueble: #1D4E63; --mat-acento: #00A8C8; }
-.floor--urbana { --mat-muro: #6E7781; --mat-piso: #B9C2CC; --mat-cubierta: #1C1C1C; --mat-vein: #3A3A3A; --mat-mueble: #121212; --mat-acento: #F06A3B; }
-.floor--mediterranea { --mat-muro: #FFF7EA; --mat-piso: #D9603B; --mat-cubierta: #C98A52; --mat-vein: #A86C38; --mat-mueble: #EAD7A4; --mat-acento: #1E6FD9; }
-
-.floor__drawing .m-piso { fill: var(--mat-piso); }
-.floor__drawing .m-cubierta { fill: var(--mat-cubierta); }
-.floor__drawing .m-mueble { fill: var(--mat-mueble); }
-.floor__drawing .m-acento { fill: var(--mat-acento); }
-.floor__drawing .wall.m-muro { stroke: var(--mat-muro); stroke-width: 6; }
-.floor__drawing .wall--in.m-muro { stroke-width: 3; }
-.floor__drawing .wall-edge { fill: none; stroke: var(--pizarra); stroke-width: 10; stroke-linecap: square; }
-.floor__drawing .wall-edge--in { stroke-width: 7; }
-/* Fundido de 800 ms al cambiar de estilo, sin movimiento */
-.floor__drawing :is(.m-piso, .m-muro, .m-cubierta, .m-mueble, .m-acento, .tx-vein) { transition: fill .8s var(--ease), stroke .8s var(--ease); }
-.floor__drawing .tex { opacity: 0; transition: opacity .8s var(--ease); }
-.floor--calida .tex--wood, .floor--nordica .tex--wood, .floor--urbana .tex--porc, .floor--mediterranea .tex--terra,
-.floor--calida .tex--vein, .floor--nordica .tex--vein, .floor--mediterranea .tex--grain { opacity: 1; }
-.floor--urbana .tex--vein { opacity: .6; }
-
-/* Texturas sutiles: vetas de madera, juntas de baldosa y vetas de piedra */
-.floor__drawing .tx { fill: none; stroke: rgba(40, 24, 10, .2); stroke-width: 1; }
-.floor__drawing .tx--soft { stroke: rgba(40, 24, 10, .11); }
-.floor__drawing .tx--grout { stroke: rgba(255, 247, 234, .6); stroke-width: 1.3; }
-.floor__drawing .tx-vein { fill: none; stroke: var(--mat-vein); stroke-width: 1.5; stroke-linecap: round; }
-
-/* Muebles y accesorios */
-.floor__drawing .furniture :is(.m-mueble, .m-acento, .m-cubierta, .f-soft, .f-dark) { stroke: rgba(20, 16, 12, .35); stroke-width: 1.1; }
-.floor__drawing .thin.f-soft { fill: #FFFDF8; }
-.floor__drawing .thin.f-dark { fill: var(--pizarra); }
-.floor__drawing .on-mat { fill: none; stroke: rgba(255, 255, 255, .32); stroke-width: 1; }
-.floor__drawing .plant circle { fill: var(--planta); stroke: rgba(10, 60, 30, .45); stroke-width: 1; }
-.floor__drawing .plant path { fill: none; stroke: #14823F; stroke-width: 1.6; stroke-linecap: round; }
-
-/* Nombres de ambientes y m² legibles sobre cualquier estilo */
-.floor__drawing .room, .floor__drawing .area { fill: var(--pizarra); paint-order: stroke; stroke: #ffffff; stroke-width: 3px; stroke-linejoin: round; }
-
-/* Celular e iPad angosto: plano arriba, teléfono centrado debajo */
-@media (max-width: 899px) {
-  .floor { grid-template-columns: minmax(0, 1fr); grid-template-areas: "plan" "phone"; gap: 28px; }
-  .floor__phone { --phone-w: min(340px, 88vw); }
 }
 
 /* Tarjetas "Después": superficie de cuarcita pulida */
@@ -1688,100 +1551,6 @@ html.intro-on { overflow: hidden; }
   .pr-card--pent.is-active .pr-card__front::after { animation: none; }
   .pr__arrow, .pr__tab, .pr__tab::before, .pr__compare-btn svg, .pr-back__more svg { transition: none; }
   .pr__arrow:hover { transform: none; }
-}
-
-/* ===== Hero: cartera de propiedades =====
-   Cada propiedad es una capa del SVG (g.prop-plan) con su paleta. Cambian cada 8 s con un fundido cruzado de 900 ms
-   (script.js): el mobiliario se apaga, los muros cruzan con escala .96 → 1 y el mobiliario nuevo entra por ambiente.
-   La pila de fotos cuelga de la esquina inferior derecha del plano y solo pisa la cota inferior. */
-.floor__drawing { --pe: cubic-bezier(.22, 1, .36, 1); }
-.prop-tag { display: inline-block; margin: 0 0 8px; padding: 5px 12px; border: 1px solid var(--linea); border-radius: 999px; background: #FBF8F2; color: var(--pizarra); font-size: .86rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-.prop-tag b { font-weight: 800; }
-.prop-plan, .f-room { transform-box: fill-box; transform-origin: center; }
-.prop-plan { opacity: 0; visibility: hidden; }
-.prop-plan.is-active { opacity: 1; visibility: visible; }
-.prop-plan.is-leaving { visibility: visible; }
-.floor__drawing .tx-vein--n { stroke: #B8C4D0; }
-.floor__drawing .tx-vein--u { stroke: #3A3A3A; }
-.floor__drawing .m-pasto { fill: #A9D39A; }
-.floor__drawing .tx-grass { fill: none; stroke: rgba(30, 100, 45, .32); stroke-width: 1.2; stroke-linecap: round; }
-.floor__drawing .plant--tree circle { fill: #3E9B57; }
-
-/* Puntos de navegación con la barra de progreso de 8 s en el activo, y botón de pausa */
-.floor__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; min-height: 36px; margin-top: 6px; }
-.prop-dots { display: flex; align-items: center; }
-.prop-dot { display: grid; place-items: center; min-width: 28px; height: 32px; padding: 0 4px; border: 0; background: none; cursor: pointer; }
-.prop-dot i { position: relative; display: block; width: 10px; height: 10px; overflow: hidden; border-radius: 999px; background: #8A7A6C; }
-.prop-dot:hover i { background: var(--grafito); }
-.prop-dot[aria-current="true"] i { width: 36px; background: rgba(43, 36, 31, .18); }
-.prop-dot i::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--pizarra); transform: scaleX(var(--p, 0)); transform-origin: left center; }
-.prop-dot:not([aria-current="true"]) i::after { display: none; }
-.prop-pause { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border: 1px solid var(--linea); border-radius: 999px; background: #FBF8F2; color: var(--pizarra); font: 700 .8rem var(--font); cursor: pointer; }
-.prop-pause svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.prop-pause .prop-pause__r { display: none; fill: currentColor; stroke: none; }
-.floor.is-user-paused .prop-pause__p { display: none; }
-.floor.is-user-paused .prop-pause .prop-pause__r { display: block; }
-.floor.is-reduced .prop-pause { display: none; }
-
-/* Pila de fotos estilo polaroid (escritorio e iPad): 220 px de ancho, girada −4° */
-.pstacks { position: absolute; right: -26px; bottom: -72px; z-index: 3; width: 220px; height: 189px; transform: rotate(-4deg); }
-.pstack { position: absolute; inset: 0; outline: none; cursor: zoom-in; opacity: 0; visibility: hidden; transition: opacity .5s var(--pe), visibility 0s linear .5s; }
-.pstack.is-active { opacity: 1; visibility: visible; transition: opacity .5s var(--pe); }
-.pstack:focus-visible .pcard[data-depth="0"] { outline: 3px solid var(--pizarra); outline-offset: 3px; }
-.pcard {
-  position: absolute; inset: 0; margin: 0; padding: 8px 8px 27px; border-radius: 3px; background: #FFFFFF;
-  box-shadow: 0 16px 30px -16px rgba(43, 36, 31, .65), 0 1px 3px rgba(43, 36, 31, .2);
-  transform-origin: 50% 70%; transition: transform .7s var(--pe), opacity .7s var(--pe);
-}
-.pcard img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center; background: #E9E2D6; }
-.pcard figcaption { position: absolute; left: 10px; right: 10px; bottom: 6px; display: flex; justify-content: space-between; gap: 8px; color: var(--pizarra); font-size: .7rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
-.pcard__label { overflow: hidden; text-overflow: ellipsis; }
-.pcard__count { color: var(--texto-2); font-variant-numeric: tabular-nums; }
-.pcard[data-depth="0"] { z-index: 4; }
-.pcard[data-depth="1"] { z-index: 3; transform: translate(7px, -6px) rotate(5deg) scale(.97); }
-.pcard[data-depth="2"] { z-index: 2; transform: translate(-6px, -9px) rotate(-6deg) scale(.94); }
-.pcard[data-depth="x"] { z-index: 1; opacity: 0; transform: translateY(-12px) scale(.9); }
-/* La que sale lo hace con una animación propia (script.js), por encima de la pila y sin transición CSS */
-.pcard.is-out { z-index: 5; transition: none; }
-
-/* Visor de fotos */
-.pbox { width: min(980px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 16px; background: #1B1612; color: #FBF8F2; }
-.pbox::backdrop { background: rgba(20, 16, 12, .8); }
-.pbox__inner { position: relative; display: grid; gap: 10px; padding: 16px 16px 14px; }
-.pbox__title { margin: 0; padding-right: 52px; font-size: 1rem; font-weight: 800; }
-.pbox__fig { display: grid; gap: 10px; margin: 0; }
-.pbox__img { display: block; width: 100%; height: min(70vh, 640px); border-radius: 10px; background: #0F0C0A; object-fit: contain; }
-.pbox__cap { display: flex; justify-content: space-between; gap: 12px; color: #E9E2D6; font-size: .9rem; }
-.pbox__count { color: #C9BBA6; font-variant-numeric: tabular-nums; }
-.pbox__nav { position: absolute; top: 50%; display: grid; place-items: center; width: 48px; height: 48px; margin-top: -24px; padding: 0; border: 0; border-radius: 50%; background: rgba(251, 248, 242, .92); color: var(--pizarra); cursor: pointer; }
-.pbox__nav--prev { left: 26px; }
-.pbox__nav--next { right: 26px; }
-.pbox__close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: rgba(251, 248, 242, .14); color: #FBF8F2; cursor: pointer; }
-.pbox__nav svg, .pbox__close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.pbox :focus-visible { outline: 3px solid var(--logo); outline-offset: 2px; }
-
-/* iPad con el teléfono al lado: la pila sale menos hacia el costado */
-@media (max-width: 1199px) {
-  .pstacks { right: -12px; bottom: -66px; }
-}
-/* iPad con el teléfono abajo: la pila queda dentro del margen y bajo los puntos se reserva una franja para ella */
-@media (min-width: 768px) and (max-width: 899px) {
-  .floor__drawing { padding-bottom: 92px; }
-  .pstacks { right: 10px; bottom: -20px; }
-}
-/* Celular: tira de fotos bajo el plano, 180 px de alto con scroll-snap horizontal */
-@media (max-width: 767px) {
-  .prop-tag { font-size: .78rem; }
-  .pstacks { position: relative; right: auto; bottom: auto; width: auto; height: auto; margin-top: 10px; transform: none; }
-  .pstack { position: relative; inset: auto; display: flex; gap: 10px; height: 180px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; opacity: 1; visibility: visible; transition: none; cursor: pointer; }
-  .pstack::-webkit-scrollbar { display: none; }
-  .pstack:not(.is-active) { display: none; }
-  .pstack:focus-visible { outline: 3px solid var(--pizarra); outline-offset: 3px; }
-  .pcard, .pcard[data-depth] { position: relative; inset: auto; flex: 0 0 auto; height: 100%; padding: 0; overflow: hidden; border-radius: 10px; opacity: 1; transform: none; transition: none; scroll-snap-align: start; box-shadow: 0 1px 3px rgba(43, 36, 31, .25); }
-  .pcard img { width: auto; height: 100%; }
-  .pcard figcaption { left: 8px; right: 8px; bottom: 8px; }
-  .pcard__label, .pcard__count { padding: 3px 8px; border-radius: 999px; background: rgba(28, 23, 19, .78); color: #FFFFFF; }
-  .pbox__nav { top: auto; bottom: 64px; }
 }
 
 /* ===== Precios: complementos (extras en UF que se suman a cualquier plan) =====
