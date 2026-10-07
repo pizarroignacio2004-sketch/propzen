@@ -446,7 +446,7 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 /* ===== Hero: ajustes para corredoras (paso 1) ===== */
 .hero__eyebrow { margin: 0 0 12px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--plano); }
 .hero__trust { grid-column: 1 / -1; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; font-size: .92rem; font-weight: 600; color: var(--texto-2); }
-.hero__trust li { display: flex; align-items: center; gap: 6px; }
+.hero__trust li { display: flex; align-items: baseline; gap: 6px; }   /* baseline: si un ítem ocupa dos renglones, el ✓ va con el primero */
 .hero__trust li::before { content: "✓"; font-weight: 800; color: var(--ok); }
 
 /* ===== Funciones: cuatro pilares (paso 2) ===== */
