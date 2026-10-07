@@ -33,7 +33,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="textures/hormigon.jpg" as="image">
-  <link rel="stylesheet" href="styles.css?v=20261007">
+  <link rel="stylesheet" href="styles.css?v=20261007-2">
   <script src="script.js?v=20261006"></script>
 
   <script type="application/ld+json">
@@ -621,14 +621,25 @@
             </div>
 
             <div class="tool__panel" role="tabpanel" id="panel-stats" aria-labelledby="tab-stats" inert>
-              <p class="stats__note">Ejemplo de un mes en una inmobiliaria de 5 agentes. Cifras ilustrativas.</p>
-              <div class="stats">
-                <div class="stat"><div class="stat__row"><span>Consultas recibidas</span><b>420</b></div><div class="stat__track"><i data-w="100"></i></div></div>
-                <div class="stat"><div class="stat__row"><span>Respondidas en menos de un minuto</span><b>420</b></div><div class="stat__track"><i data-w="100"></i></div></div>
-                <div class="stat"><div class="stat__row"><span>Clientes calificados</span><b>170</b></div><div class="stat__track"><i data-w="40"></i></div></div>
-                <div class="stat"><div class="stat__row"><span>Visitas agendadas</span><b>76</b></div><div class="stat__track"><i data-w="18"></i></div></div>
-                <div class="stat"><div class="stat__row"><span>Visitas realizadas</span><b>63</b></div><div class="stat__track"><i data-w="15"></i></div></div>
+              <!-- Antes y después en porcentaje de las consultas del mes: data-w es el ancho de la barra (%) y la anima script.js -->
+              <p class="stats__note">Ejemplo de un mes en una inmobiliaria de 5 agentes: qué porcentaje de las consultas llega a cada etapa. Cifras ilustrativas.</p>
+              <div class="stats-vs">
+                <div class="stats stats--antes">
+                  <h3 class="stats__head"><span class="tag tag--antes">Antes</span> Solo con tus corredores</h3>
+                  <div class="stat"><div class="stat__row"><span>Respondidas en menos de un minuto</span><b>10&nbsp;%</b></div><div class="stat__track"><i data-w="10"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Clientes calificados</span><b>22&nbsp;%</b></div><div class="stat__track"><i data-w="22"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Visitas agendadas</span><b>9&nbsp;%</b></div><div class="stat__track"><i data-w="9"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Visitas realizadas</span><b>5&nbsp;%</b></div><div class="stat__track"><i data-w="5"></i></div></div>
+                </div>
+                <div class="stats stats--despues">
+                  <h3 class="stats__head"><span class="tag tag--despues">Después</span> Con Propzen</h3>
+                  <div class="stat"><div class="stat__row"><span>Respondidas en menos de un minuto</span><b>100&nbsp;%</b></div><div class="stat__track"><i data-w="100"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Clientes calificados</span><b>45&nbsp;%</b></div><div class="stat__track"><i data-w="45"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Visitas agendadas</span><b>24&nbsp;%</b></div><div class="stat__track"><i data-w="24"></i></div></div>
+                  <div class="stat"><div class="stat__row"><span>Visitas realizadas</span><b>20&nbsp;%</b></div><div class="stat__track"><i data-w="20"></i></div></div>
+                </div>
               </div>
+              <p class="stats__sum">Con las mismas consultas, <strong>4 veces más visitas realizadas</strong>.</p>
             </div>
           </div>
         </div>

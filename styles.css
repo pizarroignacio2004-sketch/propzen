@@ -346,13 +346,29 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 }
 .lead-card .btn { justify-self: start; }
 
-.stats__note { font-size: .85rem; font-weight: 600; color: var(--texto-2); }
+.stats__note { margin: 0; font-size: .85rem; font-weight: 600; color: var(--texto-2); }
 .stats { display: grid; gap: 16px; }
 .stat__row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; font-size: .92rem; }
-.stat__row b { font-size: 1.1rem; font-stretch: 112%; }
+.stat__row b { font-size: 1.1rem; font-stretch: 112%; white-space: nowrap; }
 .stat__track { height: 10px; border-radius: 999px; background: #ECE3D3; overflow: hidden; }
 .stat__track i { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--plano); transition: width 1s var(--ease) .1s; }
 .stat:last-child .stat__track i { background: var(--cartel-2); }
+/* Resultados: antes (solo los corredores, gris como las citas "a mano" de la agenda) y después (con Propzen, en el
+   verde del panel), lado a lado; en celular, uno sobre otro */
+.stats-vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+.stats-vs .stats { align-content: start; padding: 18px; border: 1px solid #ECE3D3; border-radius: 12px; }
+.stats--despues { background: var(--ok-bg); border-color: #C9D1C6; }
+.stats--despues .stat__track { background: #D3DACF; }
+.stats--antes .stat__track i, .stats--antes .stat:last-child .stat__track i { background: #7D878B; }
+.stats__head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.3; }
+.tag--antes { background: #E4E2DE; color: #4F5D61; }
+.tag--despues { background: var(--plano); color: #FBF8F2; }
+.stats__sum { margin: 14px 0 0; font-size: .95rem; color: var(--texto-2); }
+.stats__sum strong { color: var(--plano); }
+@media (max-width: 767px) {
+  .stats-vs { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .stats-vs .stats { padding: 16px; }
+}
 
 /* Ficha de una visita */
 .modal {
