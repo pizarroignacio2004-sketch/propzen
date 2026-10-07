@@ -9,7 +9,7 @@
   <meta name="format-detection" content="email=no">
 
   <title>Propzen | Asistente de IA para corredoras de propiedades en Chile</title>
-  <meta name="description" content="Propzen responde tus leads por WhatsApp 24/7, filtra a los que están listos para comprar y les agenda la visita. Hecho para corredoras de propiedades en Chile.">
+  <meta name="description" content="Propzen automatiza tu corredora de propiedades: responde tus leads por WhatsApp 24/7, detecta quién puede comprar de verdad y agenda la visita con el corredor indicado. Más visitas útiles, menos horas al celular y tu equipo enfocado en cerrar.">
   <meta name="theme-color" content="#2B241F">
   <link rel="canonical" href="https://propzen.cl/">
 
@@ -51,8 +51,17 @@
         "name": "Propzen",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
-        "description": "Asistente de inteligencia artificial para inmobiliarias que responde consultas, califica compradores y agenda visitas.",
-        "offers": { "@type": "AggregateOffer", "lowPrice": "3.30", "highPrice": "7.50", "priceCurrency": "CLF" }
+        "description": "Propzen automatiza el trabajo repetitivo de las corredoras de propiedades en Chile para que sus corredores dediquen su tiempo a mostrar y cerrar. Responde cada consulta por WhatsApp en segundos, a cualquier hora; califica a los interesados por pie, crédito y urgencia; agenda las visitas con el corredor que corresponde; deriva los reclamos de arrendatarios al técnico; prepara publicaciones para portales y redes; y ordena cartera, visitas y comisiones del equipo en un panel.",
+        "audience": { "@type": "BusinessAudience", "audienceType": "Corredoras de propiedades e inmobiliarias en Chile" },
+        "featureList": [
+          "Respuesta a leads por WhatsApp 24/7 en segundos",
+          "Calificación de compradores por pie, crédito y urgencia",
+          "Agenda automática de visitas con recordatorios",
+          "Derivación de reclamos de arrendatarios al técnico",
+          "Publicaciones para portales y redes sociales con tu marca",
+          "Panel de cartera, visitas y comisiones por corredor",
+          "Funciona en tu WhatsApp de siempre y queda operando en 3 días hábiles"
+        ]
       },
       {
         "@type": "FAQPage",
@@ -61,7 +70,7 @@
           { "@type": "Question", "name": "¿Qué pasa si un cliente pregunta algo que el asistente no sabe?", "acceptedAnswer": { "@type": "Answer", "text": "Propzen solo responde con datos de tu cartera y tus reglas. Si no tiene la respuesta, lo dice y pasa la conversación a un agente con todo el contexto." } },
           { "@type": "Question", "name": "¿Funciona con mi CRM y mi web?", "acceptedAnswer": { "@type": "Answer", "text": "Se conecta con los CRM inmobiliarios más usados, con Google Sheets y con cualquier sistema que tenga API. El chat web se instala pegando una línea de código." } },
           { "@type": "Question", "name": "¿Cuánto tarda la puesta en marcha?", "acceptedAnswer": { "@type": "Answer", "text": "Entre dos y tres días hábiles: un día para importar tu cartera y otro para ajustar preguntas, horarios y canales con tu equipo." } },
-          { "@type": "Question", "name": "¿Hay un plazo mínimo de contrato?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, el contrato es por un mínimo de 6 meses. Es el tiempo que necesita el asistente para aprender de tu cartera y para que veas resultados en tus ventas. Después sigues mes a mes y puedes cancelar con 30 días de aviso." } }
+          { "@type": "Question", "name": "¿Qué gana mi corredora al contratar Propzen?", "acceptedAnswer": { "@type": "Answer", "text": "Ningún lead queda sin respuesta, tus corredores solo visitan a clientes con pie y crédito, la agenda se llena sola y recuperas tus noches y fines de semana. Todo desde tu WhatsApp de siempre, sin instalar software nuevo." } }
         ]
       }
     ]
@@ -119,7 +128,7 @@
             <a href="#como-funciona" class="btn btn--line">Ver cómo funciona</a>
           </div>
           <ul class="hero__trust">
-            <li>Contrato mínimo de 6 meses</li>
+            <li data-nosnippet>Contrato mínimo de 6 meses</li>
             <li>Lo dejamos funcionando en 3 días</li>
             <li>Trabaja en tu WhatsApp de siempre</li>
           </ul>
@@ -838,7 +847,7 @@
     </section>
 
     <!-- PRECIOS -->
-    <section id="precios" class="section pr" aria-labelledby="precios-title" aria-roledescription="carrusel">
+    <section id="precios" data-nosnippet class="section pr" aria-labelledby="precios-title" aria-roledescription="carrusel">
       <div class="wrap">
         <div class="pr__head">
           <h2 id="precios-title" class="section__title">Precios</h2>
@@ -1106,7 +1115,7 @@
          Los precios salen del objeto WEB en script.js. -->
     <!-- TODO: número real de WhatsApp en data-whatsapp (formato 569XXXXXXXX). Si queda vacío se usa el de #complementos,
          el mismo de toda la página; si ese también está vacío, "Cotizar" lleva al formulario de #contacto. -->
-    <section id="web" class="section web" aria-labelledby="web-title" data-whatsapp="" data-mode="plan">
+    <section id="web" data-nosnippet class="section web" aria-labelledby="web-title" data-whatsapp="" data-mode="plan">
       <div class="wrap">
         <p class="web__eyebrow">Adicional · Propzen Studio</p>
         <div class="web__panel">
@@ -1234,7 +1243,7 @@
             <summary>¿Cuánto tarda la puesta en marcha?</summary>
             <p>Entre dos y tres días hábiles: un día para importar tu cartera y otro para ajustar preguntas, horarios y canales con tu equipo.</p>
           </details>
-          <details>
+          <details data-nosnippet>
             <summary>¿Hay un plazo mínimo de contrato?</summary>
             <p>Sí, el contrato es por un mínimo de 6 meses. Es el tiempo que necesita el asistente para aprender de tu cartera y para que veas resultados en tus ventas. Después sigues mes a mes y puedes cancelar con 30 días de aviso.</p>
           </details>
