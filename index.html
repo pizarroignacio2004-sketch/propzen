@@ -52,25 +52,79 @@
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "description": "Propzen automatiza el trabajo repetitivo de las corredoras de propiedades en Chile para que sus corredores dediquen su tiempo a mostrar y cerrar. Responde cada consulta por WhatsApp en segundos, a cualquier hora; califica a los interesados por pie, crédito y urgencia; agenda las visitas con el corredor que corresponde; deriva los reclamos de arrendatarios al técnico; prepara publicaciones para portales y redes; y ordena cartera, visitas y comisiones del equipo en un panel.",
-        "audience": { "@type": "BusinessAudience", "audienceType": "Corredoras de propiedades e inmobiliarias en Chile" },
+        "audience": {
+          "@type": "BusinessAudience",
+          "audienceType": "Corredoras de propiedades e inmobiliarias en Chile"
+        },
         "featureList": [
           "Respuesta a leads por WhatsApp 24/7 en segundos",
           "Calificación de compradores por pie, crédito y urgencia",
           "Agenda automática de visitas con recordatorios",
           "Derivación de reclamos de arrendatarios al técnico",
           "Publicaciones para portales y redes sociales con tu marca",
-          "Panel de cartera, visitas y comisiones por corredor",
+          "Panel de control con cartera, visitas, comisiones por corredor, interés por propiedad y comuna, y fichas de cliente",
           "Funciona en tu WhatsApp de siempre y queda operando en 3 días hábiles"
         ]
       },
       {
         "@type": "FAQPage",
         "mainEntity": [
-          { "@type": "Question", "name": "¿El asistente reemplaza a mis agentes?", "acceptedAnswer": { "@type": "Answer", "text": "No. Propzen hace la primera respuesta, la calificación y la agenda. Tus agentes reciben compradores con presupuesto, zona y plazo claros, y pueden tomar cualquier conversación cuando quieran." } },
-          { "@type": "Question", "name": "¿Qué pasa si un cliente pregunta algo que el asistente no sabe?", "acceptedAnswer": { "@type": "Answer", "text": "Propzen solo responde con datos de tu cartera y tus reglas. Si no tiene la respuesta, lo dice y pasa la conversación a un agente con todo el contexto." } },
-          { "@type": "Question", "name": "¿Funciona con mi CRM y mi web?", "acceptedAnswer": { "@type": "Answer", "text": "Se conecta con los CRM inmobiliarios más usados, con Google Sheets y con cualquier sistema que tenga API. El chat web se instala pegando una línea de código." } },
-          { "@type": "Question", "name": "¿Cuánto tarda la puesta en marcha?", "acceptedAnswer": { "@type": "Answer", "text": "Entre dos y tres días hábiles: un día para importar tu cartera y otro para ajustar preguntas, horarios y canales con tu equipo." } },
-          { "@type": "Question", "name": "¿Qué gana mi corredora al contratar Propzen?", "acceptedAnswer": { "@type": "Answer", "text": "Ningún lead queda sin respuesta, tus corredores solo visitan a clientes con pie y crédito, la agenda se llena sola y recuperas tus noches y fines de semana. Todo desde tu WhatsApp de siempre, sin instalar software nuevo." } }
+          {
+            "@type": "Question",
+            "name": "¿Qué automatiza Propzen en mi corredora?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cuatro trabajos que hoy te quitan tiempo. Atiende: responde cada consulta por WhatsApp en segundos, a cualquier hora, con los datos de tu cartera, y deriva los reclamos de luz, agua y gas al técnico sin pasar por ti. Prioriza: califica a cada interesado por pie, crédito y urgencia, y le agenda la visita con el corredor que corresponde, con recordatorio incluido. Publica: con tus fotos arma la descripción para el portal y las publicaciones para redes con tu marca, cada semana. Ordena: junta la cartera, las visitas y las comisiones de tu equipo en un solo panel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué veo en el panel de control?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La cartera de cada corredor, las visitas agendadas y realizadas, y la comisión de cada uno calculada sola, sin planillas. También ves cuántas personas se interesan por cada propiedad y comuna, qué propiedad necesita un ajuste de precio, cuántas consultas se respondieron hoy y en cuánto tiempo, y la ficha de cada cliente: qué busca, su presupuesto, cómo financia y en qué etapa está."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué gana mi corredora al contratar Propzen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ningún lead queda sin respuesta, ni siquiera el domingo en la noche. Tus corredores solo visitan a clientes con pie y crédito, la agenda se llena sola y sabes quién vende y qué propiedad se mueve. Tú recuperas tus noches y tus fines de semana, y todo funciona desde tu WhatsApp de siempre, sin instalar software nuevo y operando en tres días hábiles."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿El asistente reemplaza a mis agentes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Propzen hace la primera respuesta, la calificación y la agenda. Tus agentes reciben compradores con presupuesto, zona y plazo claros, y pueden tomar cualquier conversación cuando quieran."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué pasa si un cliente pregunta algo que el asistente no sabe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Propzen solo responde con datos de tu cartera y tus reglas. Si no tiene la respuesta, lo dice y pasa la conversación a un agente con todo el contexto."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Funciona con mi CRM y mi web?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Se conecta con los CRM inmobiliarios más usados, con Google Sheets y con cualquier sistema que tenga API. El chat web se instala pegando una línea de código."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuánto tarda la puesta en marcha?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Entre dos y tres días hábiles: un día para importar tu cartera y otro para ajustar preguntas, horarios y canales con tu equipo."
+            }
+          }
         ]
       }
     ]
@@ -1223,6 +1277,18 @@
       <div class="wrap split">
         <h2 id="faq-title" class="split__head">Preguntas frecuentes</h2>
         <div class="faq">
+          <details>
+            <summary>¿Qué automatiza Propzen en mi corredora?</summary>
+            <p>Cuatro trabajos que hoy te quitan tiempo. Atiende: responde cada consulta por WhatsApp en segundos, a cualquier hora, con los datos de tu cartera, y deriva los reclamos de luz, agua y gas al técnico sin pasar por ti. Prioriza: califica a cada interesado por pie, crédito y urgencia, y le agenda la visita con el corredor que corresponde, con recordatorio incluido. Publica: con tus fotos arma la descripción para el portal y las publicaciones para redes con tu marca, cada semana. Ordena: junta la cartera, las visitas y las comisiones de tu equipo en un solo panel.</p>
+          </details>
+          <details>
+            <summary>¿Qué veo en el panel de control?</summary>
+            <p>La cartera de cada corredor, las visitas agendadas y realizadas, y la comisión de cada uno calculada sola, sin planillas. También ves cuántas personas se interesan por cada propiedad y comuna, qué propiedad necesita un ajuste de precio, cuántas consultas se respondieron hoy y en cuánto tiempo, y la ficha de cada cliente: qué busca, su presupuesto, cómo financia y en qué etapa está.</p>
+          </details>
+          <details>
+            <summary>¿Qué gana mi corredora al contratar Propzen?</summary>
+            <p>Ningún lead queda sin respuesta, ni siquiera el domingo en la noche. Tus corredores solo visitan a clientes con pie y crédito, la agenda se llena sola y sabes quién vende y qué propiedad se mueve. Tú recuperas tus noches y tus fines de semana, y todo funciona desde tu WhatsApp de siempre, sin instalar software nuevo y operando en tres días hábiles.</p>
+          </details>
           <details>
             <summary>¿El asistente reemplaza a mis agentes?</summary>
             <p>No. Propzen hace la primera respuesta, la calificación y la agenda. Tus agentes reciben compradores con presupuesto, zona y plazo claros, y pueden tomar cualquier conversación cuando quieran.</p>
