@@ -729,6 +729,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Con "reducir movimiento" queda el póster con el botón Reproducir; si el navegador bloquea la reproducción
 // automática (por ejemplo, iPhone en modo de bajo consumo), aparece el mismo botón. Mientras corre, el botón
 // queda en la esquina como "Pausar video".
+// Pantalla completa (botón de la esquina o doble clic sobre el video): en computador, Android y iPad pasa a pantalla
+// completa el contenedor entero, con sus botones, y en Android además gira a horizontal; en iPhone, que no permite
+// poner elementos en pantalla completa, se abre el reproductor nativo. Pedirla con el video detenido lo hace correr.
 document.addEventListener('DOMContentLoaded', () => {
   const wrap = document.getElementById('heroVideo');
   if (!wrap) return;
@@ -736,25 +739,43 @@ document.addEventListener('DOMContentLoaded', () => {
   if (video.dataset.poster) video.poster = video.dataset.poster;   // ver el comentario del <video> en index.html
   const btn = wrap.querySelector('.hero-video__btn');
   const label = btn.querySelector('.hero-video__label');
+  const fsBtn = wrap.querySelector('.hero-video__fs');
+  const fsLabel = fsBtn.querySelector('.sr-only');
   const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasIO = 'IntersectionObserver' in window;
+  const canFs = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  const canNativeFs = !canFs && typeof video.webkitEnterFullscreen === 'function';   // iPhone
+  const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
   let wanted = !reduced;      // corre salvo que la persona, el sistema o el navegador digan lo contrario
   let onScreen = !hasIO;
+  let idleTimer = 0;
 
+  // En pantalla completa y con el video corriendo, .is-idle esconde botones y cursor tras 2,5 s sin moverse
+  const wake = () => {
+    clearTimeout(idleTimer);
+    wrap.classList.remove('is-idle');
+    if (wanted && fsElement() === wrap) idleTimer = setTimeout(() => wrap.classList.add('is-idle'), 2500);
+  };
   // El botón refleja la intención y no el estado real: al pausarse fuera de pantalla no cambia y no salta al volver
   const render = () => {
     wrap.classList.toggle('is-playing', wanted);
     label.textContent = wanted ? 'Pausar video' : 'Reproducir video';
+    wake();
   };
-  const showBtn = () => { render(); btn.hidden = false; };
+  const showBtn = () => {
+    render();
+    btn.hidden = false;
+    if (canFs || canNativeFs) { wrap.classList.add('has-fs'); fsBtn.hidden = false; }
+  };
   const play = () => {
     const p = video.play();
     // Solo NotAllowedError es un bloqueo real; AbortError ocurre si se pausa antes de arrancar (pasar rápido de largo)
     if (p && p.catch) p.catch((err) => { if (err && err.name === 'NotAllowedError') { wanted = false; showBtn(); } });
   };
   const update = () => {
-    if (wanted && onScreen && !root.classList.contains('intro-on')) { if (video.paused) play(); }
+    const visible = onScreen || fsElement() === wrap || video.webkitDisplayingFullscreen;
+    if (wanted && visible && !root.classList.contains('intro-on')) { if (video.paused) play(); }
     else if (!video.paused) video.pause();
   };
 
@@ -766,6 +787,64 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
     update();
   });
+
+  if (canFs || canNativeFs) {
+    // iPhone: webkitEnterFullscreen falla si el video aún no tiene metadatos (iOS no precarga). El mismo toque llama a
+    // play() (en update), que lo carga, y se entra apenas llegan: ese toque ya habilitó la pantalla completa del video
+    const enterNative = () => {
+      if (video.readyState >= 1) { try { video.webkitEnterFullscreen(); } catch (e) { /* el próximo toque lo reintenta */ } return; }
+      video.addEventListener('loadedmetadata', () => { try { video.webkitEnterFullscreen(); } catch (e) { /* ídem */ } }, { once: true });
+    };
+    const toggleFs = () => {
+      if (fsElement()) {
+        const r = (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        if (r && r.catch) r.catch(() => {});
+        return;
+      }
+      wanted = true;
+      showBtn();                 // por si se pidió con doble clic antes de que el video arrancara
+      if (canFs) {
+        const r = (wrap.requestFullscreen || wrap.webkitRequestFullscreen).call(wrap);
+        if (r && r.catch) r.catch(() => {});
+      } else enterNative();
+      update();
+    };
+    fsBtn.addEventListener('click', toggleFs);
+    video.addEventListener('dblclick', toggleFs);
+    // Toda salida pasa por aquí (el botón, Esc, el gesto atrás de Android, el navegador): se restablece todo
+    let wasFs = false;
+    const onFsChange = () => {
+      const on = fsElement() === wrap;
+      if (on === wasFs) return;  // Safari avisa con y sin prefijo
+      wasFs = on;
+      wrap.classList.toggle('is-fs', on);
+      fsLabel.textContent = fsBtn.title = on ? 'Salir de pantalla completa' : 'Ver en pantalla completa';
+      if (on) {
+        // Celular: horizontal, para que el video 16:9 llene la pantalla (Android; en computador e iPad falla en silencio)
+        try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) { /* sin API de orientación */ }
+        // Si se entró con doble clic (o en Safari, que no enfoca botones al hacer clic), el foco pasa a los botones
+        if (!wrap.contains(document.activeElement)) fsBtn.focus({ preventScroll: true });
+      } else {
+        try { screen.orientation.unlock(); } catch (e) { /* sin API de orientación */ }
+      }
+      wake();
+      update();
+    };
+    document.addEventListener('fullscreenchange', onFsChange);
+    document.addEventListener('webkitfullscreenchange', onFsChange);
+    // En pantalla completa no se ve nada de la página: Tab y Mayús+Tab van de un botón al otro
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || fsElement() !== wrap) return;
+      e.preventDefault();
+      (document.activeElement === btn ? fsBtn : btn).focus();
+    });
+    // iPhone: al cerrar el reproductor nativo, iOS puede dejar el video en pausa. Si debía seguir corriendo, vuelve
+    // a play() (si el navegador no lo deja, play() pasa el botón a "Reproducir video"); se revisa otra vez al rato
+    // por si la pausa llega justo después del aviso
+    video.addEventListener('webkitendfullscreen', () => { update(); setTimeout(update, 300); });
+    // Botones ocultos (.is-idle): reaparecen al mover el mouse, tocar, usar el teclado o recibir el foco con Tab
+    ['pointermove', 'pointerdown', 'keydown', 'focusin'].forEach((type) => wrap.addEventListener(type, wake));
+  }
 
   if (hasIO) {
     // Precarga cuando el video está a menos de media pantalla de distancia (en la primera visita, durante la intro),

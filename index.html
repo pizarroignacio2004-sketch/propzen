@@ -31,8 +31,8 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="textures/hormigon.jpg" as="image">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="styles.css?v=20261006">
+  <script src="script.js?v=20261006"></script>
 
   <script type="application/ld+json">
   {
@@ -143,6 +143,12 @@
             <svg class="hero-video__ico hero-video__ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>
             <svg class="hero-video__ico hero-video__ico--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
             <span class="hero-video__label">Reproducir video</span>
+          </button>
+          <!-- Pantalla completa: script.js lo muestra solo si el navegador la permite (en iPhone abre el reproductor nativo) -->
+          <button type="button" class="hero-video__fs" title="Ver en pantalla completa" hidden>
+            <svg class="hero-video__ico hero-video__ico--expand" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>
+            <svg class="hero-video__ico hero-video__ico--shrink" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg>
+            <span class="sr-only">Ver en pantalla completa</span>
           </button>
         </div>
       </div>

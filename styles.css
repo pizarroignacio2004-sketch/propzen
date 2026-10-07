@@ -151,30 +151,48 @@ h3 { font-size: 1.2rem; font-stretch: 105%; font-weight: 700; line-height: 1.25;
 }
 .hero-video__media { display: block; width: 100%; height: 100%; object-fit: cover; background: #0B0806; }
 /* Botón: "Pausar video" discreto en la esquina mientras corre; "Reproducir video" centrado cuando está detenido
-   (movimiento reducido, reproducción automática bloqueada o pausa manual) */
-.hero-video__btn {
+   (movimiento reducido, reproducción automática bloqueada o pausa manual). A su derecha, siempre en la esquina, el
+   botón redondo de pantalla completa (.has-fs: el navegador la permite) */
+.hero-video__btn, .hero-video__fs {
   position: absolute; right: 14px; bottom: 14px; z-index: 1;
-  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px 0 12px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 14px 0 12px;
   border: 1px solid rgba(251, 248, 242, .28); border-radius: 999px; cursor: pointer; white-space: nowrap;
   background: rgba(11, 8, 6, .62); color: #FBF8F2; font: 600 .88rem/1 var(--font);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   opacity: .78; transition: opacity .2s ease, background-color .2s ease;
 }
-.hero-video__btn:hover, .hero-video__btn:focus-visible { opacity: 1; background: rgba(11, 8, 6, .82); }
-.hero-video__btn:focus-visible { outline: 3px solid var(--logo); outline-offset: 3px; }
+.hero-video__fs { width: 40px; padding: 0; }
+.hero-video.has-fs.is-playing .hero-video__btn { right: 62px; }
+.hero-video__btn:hover, .hero-video__btn:focus-visible, .hero-video__fs:hover, .hero-video__fs:focus-visible { opacity: 1; background: rgba(11, 8, 6, .82); }
+.hero-video__btn:focus-visible, .hero-video__fs:focus-visible { outline: 3px solid var(--logo); outline-offset: 3px; }
 .hero-video__ico { width: 16px; height: 16px; flex-shrink: 0; }
 .hero-video__ico--play { fill: currentColor; }
 .hero-video__ico--pause { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
 .hero-video.is-playing .hero-video__ico--play, .hero-video:not(.is-playing) .hero-video__ico--pause { display: none; }
+.hero-video__fs .hero-video__ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.hero-video.is-fs .hero-video__ico--expand, .hero-video:not(.is-fs) .hero-video__ico--shrink { display: none; }
 .hero-video:not(.is-playing) .hero-video__btn {
   right: 50%; bottom: 50%; transform: translate(50%, 50%);
   min-height: 52px; padding: 0 22px 0 18px; font-size: 1rem; opacity: 1; background: rgba(11, 8, 6, .78);
 }
-/* Celular: el video va a todo el ancho con el margen de 16 px de la página; botón de pausa más compacto */
+/* En pantalla completa (.is-fs la pone script.js, con o sin prefijo webkit): sin bordes ni sombra y el video entero,
+   con franjas si la pantalla no es 16:9. Quieto 2,5 s mientras corre (.is-idle), se esconden los botones y el cursor;
+   vuelven al mover el mouse o tocar. Ocultos siguen enfocables (sin visibility: hidden): con Tab reaparecen, y con
+   el foco de teclado en un botón no se esconden. */
+.hero-video.is-fs { width: 100%; height: 100%; aspect-ratio: auto; margin: 0; border-radius: 0; box-shadow: none; }
+.hero-video.is-fs .hero-video__media { object-fit: contain; }
+.hero-video.is-fs.is-idle:not(:has(:focus-visible)) { cursor: none; }
+.hero-video.is-fs.is-idle:not(:has(:focus-visible)) :is(.hero-video__btn, .hero-video__fs) {
+  opacity: 0; pointer-events: none; transition: opacity .4s ease;
+}
+/* Celular: el video va a todo el ancho con el margen de 16 px de la página; botones de pausa y pantalla completa más compactos */
 @media (max-width: 767px) {
   .hero-video { margin-top: 32px; border-radius: 10px; }
   .hero-video.is-playing .hero-video__btn { right: 8px; bottom: 8px; min-height: 34px; padding: 0 10px; font-size: .8rem; }
+  .hero-video.has-fs.is-playing .hero-video__btn { right: 48px; }
   .hero-video.is-playing .hero-video__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hero-video__fs { right: 8px; bottom: 8px; width: 34px; min-height: 34px; }
+  .hero-video__fs .hero-video__ico { width: 16px; height: 16px; }
 }
 
 /* Secciones */
